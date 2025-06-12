@@ -7,8 +7,10 @@ enum class Severity {
 	High
 };
 
+static size_t warningCounter = 0;
 class Warning {
 private:
+	size_t id = 0;
 	size_t senderId = 0;
 	String description = "";
 	unsigned severityPoints = 0;

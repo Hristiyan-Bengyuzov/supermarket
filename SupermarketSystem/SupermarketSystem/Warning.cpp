@@ -2,6 +2,7 @@
 
 Warning::Warning(size_t senderId, const String& description, unsigned severityPoints)
 {
+	id = warningCounter++;
 	this->senderId = senderId;
 	this->description = description;
 	this->severityPoints = severityPoints;
