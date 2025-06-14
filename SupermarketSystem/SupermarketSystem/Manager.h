@@ -10,4 +10,5 @@ private:
 public:
 	Manager() = default;
 	Manager(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass);
+	Role getRole() const override;
 };

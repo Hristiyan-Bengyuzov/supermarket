@@ -12,4 +12,5 @@ public:
 	Cashier(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass);
 
 	void addWarningId(size_t warningId);
+	Role getRole() const override;
 };

@@ -31,8 +31,13 @@ void Manager::saveCodeToFile() const
 	ofs.close();
 }
 
-Manager::Manager(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass) : Employee(name, familyName, phoneNumber, age, plainPass, Role::Manager)
+Manager::Manager(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass) : Employee(name, familyName, phoneNumber, age, plainPass)
 {
 	this->specialCode = generateSpecialCode();
 	saveCodeToFile();
+}
+
+Role Manager::getRole() const
+{
+	return Role::Manager;
 }
