@@ -226,6 +226,27 @@ std::ostream& operator<<(std::ostream& os, const String& other)
 	return os << other.data;
 }
 
+void String::serialize(std::ofstream& ofs) const
+{
+	ofs.write(reinterpret_cast<const char*>(&size), sizeof(size));
+	ofs.write(data, size);
+}
+
+void String::deserialize(std::ifstream& ifs)
+{
+	size_t newSize;
+	ifs.read(reinterpret_cast<char*>(&newSize), sizeof(newSize));
+
+	char* newData = new char[newSize + 1];
+	ifs.read(newData, newSize);
+	newData[newSize] = '\0';
+
+	delete[] data;
+	data = newData;
+	size = newSize;
+	capacity = newSize + 1;
+}
+
 String::~String()
 {
 	free();

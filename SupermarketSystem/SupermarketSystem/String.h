@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #pragma warning (disable: 4996)
+#include "Serializable.h"
 
-
-class String
+class String : public Serializable
 {
 private:
 	char* data;
@@ -57,6 +57,9 @@ public:
 
 	friend std::istream& operator>>(std::istream& is, String& other);
 	friend std::ostream& operator<<(std::ostream& os, const String& other);
+
+	void serialize(std::ofstream& ofs) const override;
+	void deserialize(std::ifstream& ifs) override;
 
 	~String();
 };
