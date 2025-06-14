@@ -4,10 +4,14 @@
 #include <iostream>
 #include "String.h"
 #include "PasswordUtils.h"
+#include "Employee.h"
+#include "GenUtils.h"
+#include<ctime>
+#include<cstdlib>
+#include "Manager.h"
 
 int main()
 {
-	String str = "hello";
-	String res = PasswordUtils::sha256(str);
-	std::cout << res;
+	Manager man("Hristiyan", "Bengyozov", "0895556517", 18, "password");
+
 }

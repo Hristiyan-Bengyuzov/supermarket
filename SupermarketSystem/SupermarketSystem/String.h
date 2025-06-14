@@ -39,6 +39,9 @@ public:
 	String& operator+=(const String& other);
 	friend String operator+(const String& lhs, const String& rhs);
 
+	static String parseFrom(size_t num);
+	String reverse() const;
+
 	String substr(size_t begin, size_t howMany) const;
 	bool startsWith(const String& other) const;
 	bool endsWith(const String& other) const;

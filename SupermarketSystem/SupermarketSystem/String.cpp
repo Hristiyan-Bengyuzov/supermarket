@@ -6,10 +6,22 @@ String::String() : String("")
 {
 }
 
-String::String(const char* data) : size(strlen(data)), capacity(allocateCapacity(size))
+String::String(const char* data)
 {
-	this->data = new char[this->capacity];
-	strcpy(this->data, data);
+	if (!data)
+	{
+		this->size = 0;
+		this->capacity = allocateCapacity(0);
+		this->data = new char[this->capacity];
+		this->data[0] = '\0';
+	}
+	else
+	{
+		this->size = strlen(data);
+		this->capacity = allocateCapacity(this->size);
+		this->data = new char[this->capacity];
+		strcpy(this->data, data);
+	}
 }
 
 String::String(size_t newSize) : size(0), capacity(allocateCapacity(newSize))
@@ -94,6 +106,32 @@ String operator+(const String& lhs, const String& rhs)
 	toReturn += rhs;
 
 	return toReturn;
+}
+
+String String::parseFrom(size_t num)
+{
+	if (num == 0)
+		return String("0");
+
+	String res;
+
+	while (num)
+	{
+		res += '0' + num % 10;
+		num /= 10;
+	}
+
+	return res.reverse();
+}
+
+String String::reverse() const
+{
+	String reversed;
+	for (int i = getSize() - 1; i >= 0; --i)
+	{
+		reversed += (*this)[i];
+	}
+	return reversed;
 }
 
 String String::substr(size_t begin, size_t howMany) const

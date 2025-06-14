@@ -127,22 +127,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cashier.cpp" />
     <ClCompile Include="CharUtils.cpp" />
     <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="GenUtils.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="PasswordUtils.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="SupermarketSystem.cpp" />
     <ClCompile Include="ValidationUtils.cpp" />
+    <ClCompile Include="Warning.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cashier.h" />
     <ClInclude Include="CharUtils.h" />
     <ClInclude Include="Employee.h" />
+    <ClInclude Include="GenUtils.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="Password.h" />
     <ClInclude Include="PasswordUtils.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="ValidationUtils.h" />
+    <ClInclude Include="Vector.hpp" />
+    <ClInclude Include="Warning.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

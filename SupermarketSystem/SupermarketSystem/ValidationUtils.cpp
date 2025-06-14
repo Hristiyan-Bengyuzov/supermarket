@@ -4,7 +4,7 @@
 
 bool ValidationUtils::isValidName(const String& name)
 {
-	if (name == nullptr || !CharUtils::isLowerCase(name[0]))
+	if (name == nullptr || !CharUtils::isUpperCase(name[0]))
 		return false;
 
 	for (size_t i = 1; i < name.getSize(); i++)

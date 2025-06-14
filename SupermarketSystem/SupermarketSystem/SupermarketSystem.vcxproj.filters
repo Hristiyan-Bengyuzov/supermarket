@@ -13,16 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Employees">
-      <UniqueIdentifier>{1d458cef-31e9-472f-8b66-496dfbd1d333}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{a2b39560-dde3-48c9-803c-67e51649e534}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{d968fcb6-16f5-4d4f-9e0c-e9c034a46806}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Employees">
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{e9b2a7f8-4a1b-43e1-b77d-6767d5624440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models\Employees">
+      <UniqueIdentifier>{1d458cef-31e9-472f-8b66-496dfbd1d333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models">
+      <UniqueIdentifier>{0ee474a1-e8f7-4f27-ab80-d5cb48397e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Employees">
       <UniqueIdentifier>{5df7ad10-5648-45ec-8944-f6f6d8a707ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -37,7 +43,7 @@
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Employee.cpp">
-      <Filter>Source Files\Employees</Filter>
+      <Filter>Source Files\Models\Employees</Filter>
     </ClCompile>
     <ClCompile Include="PasswordUtils.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -48,10 +54,22 @@
     <ClCompile Include="Password.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Warning.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Cashier.cpp">
+      <Filter>Source Files\Models\Employees</Filter>
+    </ClCompile>
+    <ClCompile Include="GenUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Source Files\Models\Employees</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Employee.h">
-      <Filter>Header Files\Employees</Filter>
+      <Filter>Header Files\Models\Employees</Filter>
     </ClInclude>
     <ClInclude Include="CharUtils.h">
       <Filter>Header Files\Utils</Filter>
@@ -69,7 +87,19 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Cashier.h">
-      <Filter>Header Files\Employees</Filter>
+      <Filter>Header Files\Models\Employees</Filter>
+    </ClInclude>
+    <ClInclude Include="Warning.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.hpp">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>Header Files\Models\Employees</Filter>
+    </ClInclude>
+    <ClInclude Include="GenUtils.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

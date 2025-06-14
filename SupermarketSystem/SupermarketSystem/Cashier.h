@@ -2,7 +2,7 @@
 #include "Vector.hpp"
 #include "Employee.h"
 
-class Cashier : public Employee{
+class Cashier : public Employee {
 private:
 	size_t transactionsMade = 0;
 	Vector<size_t> warningIds;

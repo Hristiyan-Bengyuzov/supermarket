@@ -10,7 +10,7 @@ enum class Role {
 
 static size_t counter = 0;
 class Employee {
-private:
+protected:
 	size_t id = 0;
 	String name = "";
 	String familyName = "";
