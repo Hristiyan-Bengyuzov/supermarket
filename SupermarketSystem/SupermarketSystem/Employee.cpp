@@ -32,10 +32,25 @@ void Employee::setAge(unsigned age)
 
 void Employee::serialize(std::ofstream& ofs) const
 {
+	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));
+	name.serialize(ofs);
+	familyName.serialize(ofs);
+	phoneNumber.serialize(ofs);
+	ofs.write(reinterpret_cast<const char*>(&age), sizeof(age));
+	password.serialize(ofs);
 }
 
 void Employee::deserialize(std::ifstream& ifs)
 {
+	ifs.read(reinterpret_cast<char*>(&id), sizeof(id));
+	if (id >= counter) 
+		counter = id + 1; 
+
+	name.deserialize(ifs);
+	familyName.deserialize(ifs);
+	phoneNumber.deserialize(ifs);
+	ifs.read(reinterpret_cast<char*>(&age), sizeof(age));
+	password.deserialize(ifs);
 }
 
 Employee::Employee() = default;

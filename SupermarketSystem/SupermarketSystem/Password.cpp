@@ -37,3 +37,15 @@ const String& Password::getHash() const
 {
     return hashed;
 }
+
+void Password::serialize(std::ofstream& ofs) const
+{
+    hashed.serialize(ofs);
+    salt.serialize(ofs);
+}
+
+void Password::deserialize(std::ifstream& ifs)
+{
+    hashed.deserialize(ifs);
+    salt.deserialize(ifs);
+}

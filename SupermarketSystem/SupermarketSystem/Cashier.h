@@ -13,4 +13,6 @@ public:
 
 	void addWarningId(size_t warningId);
 	Role getRole() const override;
+	void serialize(std::ofstream& ofs) const override;
+	void deserialize(std::ifstream& ifs) override;
 };

@@ -41,3 +41,23 @@ Role Manager::getRole() const
 {
 	return Role::Manager;
 }
+
+void Manager::serialize(std::ofstream& ofs) const
+{
+	Role role = getRole();
+	ofs.write(reinterpret_cast<const char*>(&role), sizeof(Role));
+
+	Employee::serialize(ofs);
+	specialCode.serialize(ofs);
+}
+
+void Manager::deserialize(std::ifstream& ifs)
+{
+	Role role;
+	ifs.read(reinterpret_cast<char*>(&role), sizeof(Role));
+	if (role != Role::Manager)
+		throw std::runtime_error("Data corruption: Expected Manager role");
+
+	Employee::deserialize(ifs);
+	specialCode.deserialize(ifs);
+}
