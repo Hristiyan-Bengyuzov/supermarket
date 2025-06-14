@@ -30,11 +30,6 @@ void Cashier::serialize(std::ofstream& ofs) const
 
 void Cashier::deserialize(std::ifstream& ifs)
 {
-    Role role;
-    ifs.read(reinterpret_cast<char*>(&role), sizeof(Role));
-    if (role != Role::Cashier) 
-        throw std::runtime_error("Data corruption: Expected Cashier role");
-
     Employee::deserialize(ifs);
     ifs.read(reinterpret_cast<char*>(&transactionsMade), sizeof(size_t));
 

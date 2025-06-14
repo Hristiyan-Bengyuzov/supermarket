@@ -53,11 +53,6 @@ void Manager::serialize(std::ofstream& ofs) const
 
 void Manager::deserialize(std::ifstream& ifs)
 {
-	Role role;
-	ifs.read(reinterpret_cast<char*>(&role), sizeof(Role));
-	if (role != Role::Manager)
-		throw std::runtime_error("Data corruption: Expected Manager role");
-
 	Employee::deserialize(ifs);
 	specialCode.deserialize(ifs);
 }

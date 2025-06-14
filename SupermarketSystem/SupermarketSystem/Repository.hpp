@@ -7,14 +7,12 @@
 
 template <typename T>
 class Repository {
-private:
+protected:
 	Vector<SharedPtr<T>> items;
 	String file;
 
 public:
-	explicit Repository(const String& file) : file(file) {
-		loadData();
-	}
+	explicit Repository(const String& file) : file(file) {}
 
 	virtual ~Repository() {
 		saveChanges();
@@ -75,29 +73,6 @@ public:
 
 	size_t count() const {
 		return items.getSize();
-	}
-
-	bool loadData() {
-		if (!file.c_str())
-			return false;
-
-		std::ifstream in(file.c_str(), std::ios::binary | std::ios::in);
-
-		if (!in.is_open())
-			return false;
-
-		items.clear();
-
-		size_t count;
-		in.read((char*)&count, sizeof(count));
-
-		for (size_t i = 0; i < count; ++i) {
-			SharedPtr<T> item(new T());
-			item->deserialize(in);
-			items.push_back(item);
-		}
-
-		return true;
 	}
 
 	bool saveChanges() const {

@@ -27,6 +27,7 @@ public:
 
 	virtual Role getRole() const = 0;
 
+	virtual ~Employee() = default;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };
