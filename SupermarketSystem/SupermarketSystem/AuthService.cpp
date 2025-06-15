@@ -40,10 +40,10 @@ bool AuthService::registerEmployee(const RegisterDTO& dto)
 			return requestRepo.saveChanges();
 		}
 		case Role::Manager: {
-			Manager manager(dto.firstName, dto.lastName, dto.phoneNumber, dto.age, dto.plainPass);
+			Manager* manager = new Manager{ dto.firstName, dto.lastName, dto.phoneNumber, dto.age, dto.plainPass };
 			employeeRepo.add(manager);
-			std::cout << "Special code: " << manager.getSpecialCode() << std::endl;
-			std::cout << "Code: " << manager.getId() << "_special_code.txt" << std::endl;
+			std::cout << "Special code: " << manager->getSpecialCode() << std::endl;
+			std::cout << "Code: " << manager->getId() << "_special_code.txt" << std::endl;
 			return employeeRepo.saveChanges();
 		}
 	}

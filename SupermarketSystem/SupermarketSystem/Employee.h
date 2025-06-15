@@ -1,4 +1,5 @@
 #pragma once
+#include "Printable.h"
 #include "String.h"
 #include "Password.h"
 
@@ -8,7 +9,7 @@ enum class Role {
 };
 
 static size_t counter = 0;
-class Employee : public Serializable {
+class Employee : public Serializable, public Printable {
 protected:
 	size_t id = 0;
 	String name = "";
@@ -34,4 +35,5 @@ public:
 	virtual ~Employee() = default;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
+	void print(std::ostream& os) const override;
 };

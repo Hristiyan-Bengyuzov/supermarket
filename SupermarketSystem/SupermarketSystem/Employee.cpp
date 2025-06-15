@@ -53,8 +53,8 @@ void Employee::serialize(std::ofstream& ofs) const
 void Employee::deserialize(std::ifstream& ifs)
 {
 	ifs.read(reinterpret_cast<char*>(&id), sizeof(id));
-	if (id >= counter) 
-		counter = id + 1; 
+	if (id >= counter)
+		counter = id + 1;
 
 	name.deserialize(ifs);
 	familyName.deserialize(ifs);
@@ -63,10 +63,20 @@ void Employee::deserialize(std::ifstream& ifs)
 	password.deserialize(ifs);
 }
 
+void Employee::print(std::ostream& os) const
+{
+	os << "Id: " << id << std::endl;
+	os << "First name: " << name << std::endl;
+	os << "Last name: " << familyName << std::endl;
+	os << "Phone number: " << phoneNumber << std::endl;
+	os << "Age: " << age << std::endl;
+}
+
 Employee::Employee() = default;
 
 Employee::Employee(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass)
 {
+	id = counter++;
 	setName(name);
 	setFamilyName(familyName);
 	setPhoneNumber(phoneNumber);

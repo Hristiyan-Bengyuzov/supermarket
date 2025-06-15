@@ -9,9 +9,20 @@
 #include<ctime>
 #include<cstdlib>
 #include "Manager.h"
+#include "Cashier.h"
+#include "EmployeeRepository.h"
+#include "EmployeeService.h"
 
 int main()
 {
-	Manager man("Hristiyan", "Bengyozov", "0895556517", 18, "password");
+	EmployeeRepository repo;
+	if (repo.count() == 0)
+	{
+		repo.add(new Manager{ "Hristiyan","Bengyuzov", "0895556517", 19, "password" });
+		repo.add(new Cashier{ "Haralampi","Slavkov", "0895556517", 19, "password" });
+		repo.saveChanges();
+	}
 
+	EmployeeService service(repo);
+	service.listWorkers(std::cout);
 }

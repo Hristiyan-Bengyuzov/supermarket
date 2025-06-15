@@ -61,3 +61,9 @@ void Manager::deserialize(std::ifstream& ifs)
 	Employee::deserialize(ifs);
 	specialCode.deserialize(ifs);
 }
+
+void Manager::print(std::ostream& os) const
+{
+	os << "Role: Manager" << std::endl;
+	Employee::print(os);
+}

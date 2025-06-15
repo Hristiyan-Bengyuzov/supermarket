@@ -30,16 +30,24 @@ void Cashier::serialize(std::ofstream& ofs) const
 
 void Cashier::deserialize(std::ifstream& ifs)
 {
-    Employee::deserialize(ifs);
-    ifs.read(reinterpret_cast<char*>(&transactionsMade), sizeof(size_t));
+	Employee::deserialize(ifs);
+	ifs.read(reinterpret_cast<char*>(&transactionsMade), sizeof(size_t));
 
-    size_t warningSize = 0;
-    ifs.read(reinterpret_cast<char*>(&warningSize), sizeof(size_t));
-    warningIds.clear();
+	size_t warningSize = 0;
+	ifs.read(reinterpret_cast<char*>(&warningSize), sizeof(size_t));
+	warningIds.clear();
 
-    for (size_t i = 0; i < warningSize; i++) {
-        size_t warningId;
-        ifs.read(reinterpret_cast<char*>(&warningId), sizeof(size_t));
-        warningIds.push_back(warningId);
-    }
+	for (size_t i = 0; i < warningSize; i++) {
+		size_t warningId;
+		ifs.read(reinterpret_cast<char*>(&warningId), sizeof(size_t));
+		warningIds.push_back(warningId);
+	}
+}
+
+void Cashier::print(std::ostream& os) const
+{
+	os << "Role: Cashier" << std::endl;
+	os << "Transactions made: " << transactionsMade << std::endl;
+	os << "Warnings: " << warningIds.getSize() << std::endl;
+	Employee::print(os);
 }
