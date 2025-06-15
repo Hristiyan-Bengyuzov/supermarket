@@ -17,3 +17,13 @@ void EmployeeService::listWorkers(std::ostream& os) const
 		os << std::endl;
 	}
 }
+
+bool EmployeeService::leave(size_t employeeId)
+{
+	SharedPtr<Employee> employee = employeeRepo.findById(employeeId);
+	if (!employee)
+		throw std::runtime_error("Employee not found");
+
+	employeeRepo.removeById(employeeId);
+	return employeeRepo.saveChanges();
+}

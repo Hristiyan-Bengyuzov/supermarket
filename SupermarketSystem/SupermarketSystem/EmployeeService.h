@@ -9,4 +9,5 @@ public:
 	EmployeeService(EmployeeRepository& employeeRepo);
 
 	void listWorkers(std::ostream& os) const;
+	bool leave(size_t employeeId);
 };
