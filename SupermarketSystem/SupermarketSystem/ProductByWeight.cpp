@@ -21,3 +21,17 @@ ProductType ProductByWeight::getType() const
 {
 	return ProductType::ByWeight;
 }
+
+void ProductByWeight::serialize(std::ofstream& ofs) const
+{
+	ProductType type = getType();
+	ofs.write(reinterpret_cast<const char*>(&type), sizeof(ProductType));
+	Product::serialize(ofs);
+	ofs.write(reinterpret_cast<const char*>(&totalKilos), sizeof(double));
+}
+
+void ProductByWeight::deserialize(std::ifstream& ifs)
+{
+	Product::deserialize(ifs);
+	ifs.read(reinterpret_cast<char*>(&totalKilos), sizeof(double));
+}

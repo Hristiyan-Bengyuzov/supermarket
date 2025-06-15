@@ -1,5 +1,6 @@
 #pragma once
 #include "String.h"
+#include "Serializable.h"
 
 enum ProductType {
 	ByUnit,
@@ -7,7 +8,7 @@ enum ProductType {
 };
 
 static size_t productCounter = 0;
-class Product {
+class Product : public Serializable {
 protected:
 	size_t id = 0;
 	String name = "";
@@ -23,4 +24,7 @@ public:
 	virtual double getTotalPrice(double amount) const = 0;
 	virtual void sell(double amount) = 0;
 	virtual ProductType getType() const = 0;
+
+	void serialize(std::ofstream& ofs) const override;
+	void deserialize(std::ifstream& ifs) override;
 };

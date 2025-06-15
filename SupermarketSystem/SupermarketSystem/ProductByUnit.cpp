@@ -27,3 +27,17 @@ ProductType ProductByUnit::getType() const
 {
 	return ProductType::ByUnit;
 }
+
+void ProductByUnit::serialize(std::ofstream& ofs) const
+{
+	ProductType type = getType();
+	ofs.write(reinterpret_cast<const char*>(&type), sizeof(ProductType));
+	Product::serialize(ofs);
+	ofs.write(reinterpret_cast<const char*>(&quantity), sizeof(size_t));
+}
+
+void ProductByUnit::deserialize(std::ifstream& ifs)
+{
+	Product::deserialize(ifs);
+	ifs.read(reinterpret_cast<char*>(&quantity), sizeof(size_t));
+}

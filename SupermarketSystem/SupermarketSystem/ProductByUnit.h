@@ -12,4 +12,6 @@ public:
 	virtual double getTotalPrice(double units) const override;
 	virtual void sell(double units) override;
 	virtual ProductType getType() const override;
+	void serialize(std::ofstream& ofs) const override;
+	void deserialize(std::ifstream& ifs) override;
 };
