@@ -30,6 +30,11 @@ void Employee::setAge(unsigned age)
 	this->age = age;
 }
 
+size_t Employee::getId() const
+{
+	return id;
+}
+
 bool Employee::checkPass(const String& plainPass) const
 {
 	return password == plainPass;

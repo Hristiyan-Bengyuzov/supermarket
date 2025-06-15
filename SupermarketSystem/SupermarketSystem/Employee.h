@@ -25,6 +25,8 @@ public:
 	void setPhoneNumber(const String& phoneNumber);
 	void setAge(unsigned age);
 
+	size_t getId() const;
+
 	virtual Role getRole() const = 0;
 
 	bool checkPass(const String& plainPass) const;

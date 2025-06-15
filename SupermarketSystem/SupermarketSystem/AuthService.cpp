@@ -1,6 +1,6 @@
 #include "AuthService.h"
 
-AuthService::AuthService(EmployeeRepository& employeeRepo) : employeeRepo(employeeRepo)
+AuthService::AuthService(EmployeeRepository& employeeRepo, RegisterRequestRepository& requestRepo) : employeeRepo(employeeRepo), requestRepo(requestRepo)
 {
 }
 
@@ -26,6 +26,28 @@ bool AuthService::logout()
 		throw std::runtime_error("No employee is currently authenticated");
 
 	currentEmployee = SharedPtr<Employee>();
+	return true;
+}
+
+bool AuthService::registerEmployee(const RegisterDTO& dto)
+{
+	switch (dto.role)
+	{
+		case Role::Cashier: {
+			RegisterRequest request(dto.firstName, dto.lastName, dto.phoneNumber, dto.age, dto.plainPass);
+			requestRepo.add(request);
+			std::cout << "Cashier registration pending approval from a manager";
+			return requestRepo.saveChanges();
+		}
+		case Role::Manager: {
+			Manager manager(dto.firstName, dto.lastName, dto.phoneNumber, dto.age, dto.plainPass);
+			employeeRepo.add(manager);
+			std::cout << "Special code: " << manager.getSpecialCode() << std::endl;
+			std::cout << "Code: " << manager.getId() << "_special_code.txt" << std::endl;
+			return employeeRepo.saveChanges();
+		}
+	}
+
 	return true;
 }
 

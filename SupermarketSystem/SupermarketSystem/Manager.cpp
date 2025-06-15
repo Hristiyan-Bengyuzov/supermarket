@@ -42,6 +42,11 @@ Role Manager::getRole() const
 	return Role::Manager;
 }
 
+const String& Manager::getSpecialCode() const
+{
+	return specialCode;
+}
+
 void Manager::serialize(std::ofstream& ofs) const
 {
 	Role role = getRole();
