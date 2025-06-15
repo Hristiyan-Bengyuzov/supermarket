@@ -30,6 +30,11 @@ void Employee::setAge(unsigned age)
 	this->age = age;
 }
 
+bool Employee::checkPass(const String& plainPass) const
+{
+	return password == plainPass;
+}
+
 void Employee::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));
