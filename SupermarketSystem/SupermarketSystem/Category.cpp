@@ -7,6 +7,11 @@ Category::Category(const String& name, const String& description)
 	this->description = description;
 }
 
+size_t Category::getId() const
+{
+	return id;
+}
+
 void Category::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(size_t));

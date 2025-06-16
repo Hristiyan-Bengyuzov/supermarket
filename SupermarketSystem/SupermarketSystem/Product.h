@@ -25,6 +25,8 @@ public:
 	virtual double getTotalPrice(double amount) const = 0;
 	virtual void sell(double amount) = 0;
 	virtual ProductType getType() const = 0;
+	size_t getId() const;
+	size_t getCategoryId() const;
 
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;

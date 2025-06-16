@@ -8,6 +8,16 @@ Product::Product(const String& name, size_t categoryId, double price)
 	this->price = price;
 }
 
+size_t Product::getId() const
+{
+	return id;
+}
+
+size_t Product::getCategoryId() const
+{
+	return categoryId;
+}
+
 void Product::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(size_t));

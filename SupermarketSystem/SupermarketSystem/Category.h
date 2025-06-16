@@ -13,6 +13,7 @@ public:
 	Category() = default;
 	Category(const String& name, const String& description);
 
+	size_t getId() const;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };
