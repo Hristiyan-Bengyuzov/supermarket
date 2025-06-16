@@ -37,6 +37,18 @@ Manager::Manager(const String& name, const String& familyName, const String& pho
 	saveCodeToFile();
 }
 
+Manager::Manager(size_t id, const String& name, const String& familyName, const String& phoneNumber, unsigned age, const Password& pass)
+{
+	this->id = id;
+	setName(name);
+	setFamilyName(familyName);
+	setPhoneNumber(phoneNumber);
+	setAge(age);
+	this->password = pass;
+	this->specialCode = generateSpecialCode();
+	saveCodeToFile();
+}
+
 Role Manager::getRole() const
 {
 	return Role::Manager;

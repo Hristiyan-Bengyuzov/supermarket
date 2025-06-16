@@ -33,8 +33,7 @@ bool ManagerService::approve(size_t managerId, size_t requestId, const String& s
 	if (!employee || employee->getRole() != Role::Manager)
 		throw std::runtime_error("Invalid manager");
 
-	// this is fucking stupid
-	SharedPtr<Manager> manager = SharedPtr<Manager>(dynamic_cast<Manager*>(employee.get()));
+	SharedPtr<Manager> manager(employee);
 	if (manager->getSpecialCode() != specialCode)
 		throw std::runtime_error("Invalid special code");
 
@@ -55,8 +54,7 @@ bool ManagerService::decline(size_t managerId, size_t requestId, const String& s
 	if (!employee || employee->getRole() != Role::Manager)
 		throw std::runtime_error("Invalid manager");
 
-	// this is fucking stupid
-	SharedPtr<Manager> manager = SharedPtr<Manager>(dynamic_cast<Manager*>(employee.get()));
+	SharedPtr<Manager> manager(employee);
 	if (manager->getSpecialCode() != specialCode)
 		throw std::runtime_error("Invalid special code");
 
@@ -111,3 +109,23 @@ bool ManagerService::warnCashier(const CreateWarningDTO& dto)
 	cashier->addWarningId(newWarning.getId());
 	return employeeRepo.saveChanges() && warningRepo.saveChanges();
 }
+
+bool ManagerService::promoteCashier(size_t managerId, size_t cashierId, const String& specialCode)
+{
+	SharedPtr<Employee> managerEmp = employeeRepo.findById(managerId);
+	if (!managerEmp || managerEmp->getRole() != Role::Manager)
+		throw std::runtime_error("Invalid manager");
+
+	SharedPtr<Manager> manager(managerEmp);
+	if (manager->getSpecialCode() != specialCode)
+		throw std::runtime_error("Invalid special code");
+
+	SharedPtr<Employee> cashier = employeeRepo.findById(cashierId);
+	if (!cashier || cashier->getRole() != Role::Cashier)
+		throw std::runtime_error("Invalid cashier");
+
+	employeeRepo.removeById(cashierId);
+	Manager* newManager = new Manager(cashierId, cashier->getName(), cashier->getFamilyName(), cashier->getPhoneNumber(), cashier->getAge(), cashier->getPass());
+	employeeRepo.add(newManager);
+	return employeeRepo.saveChanges();
+ }

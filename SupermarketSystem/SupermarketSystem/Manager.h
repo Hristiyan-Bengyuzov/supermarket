@@ -10,6 +10,10 @@ private:
 public:
 	Manager() = default;
 	Manager(const String& name, const String& familyName, const String& phoneNumber, unsigned age, const String& plainPass);
+
+	// constructor used for promotion
+	Manager(size_t id, const String& name, const String& familyName, const String& phoneNumber, unsigned age, const Password& pass);
+
 	Role getRole() const override;
 
 	const String& getSpecialCode() const;

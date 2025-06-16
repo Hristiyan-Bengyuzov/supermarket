@@ -27,6 +27,11 @@ public:
 	void setAge(unsigned age);
 
 	size_t getId() const;
+	const String& getName() const;
+	const String& getFamilyName() const;
+	const String& getPhoneNumber() const;
+	unsigned getAge() const;
+	const Password& getPass() const;
 
 	virtual Role getRole() const = 0;
 

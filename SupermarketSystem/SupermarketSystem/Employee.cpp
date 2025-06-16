@@ -35,6 +35,31 @@ size_t Employee::getId() const
 	return id;
 }
 
+const String& Employee::getName() const
+{
+	return name;
+}
+
+const String& Employee::getFamilyName() const
+{
+	return familyName;
+}
+
+const String& Employee::getPhoneNumber() const
+{
+	return phoneNumber;
+}
+
+unsigned Employee::getAge() const
+{
+	return age;
+}
+
+const Password& Employee::getPass() const
+{
+	return password;
+}
+
 bool Employee::checkPass(const String& plainPass) const
 {
 	return password == plainPass;

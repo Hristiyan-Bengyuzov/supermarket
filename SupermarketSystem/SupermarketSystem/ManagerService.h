@@ -22,4 +22,5 @@ public:
 	bool decline(size_t managerId, size_t requestId, const String& specialCode);
 	void listWarnedCashiers(std::ostream& os, unsigned points) const;
 	bool warnCashier(const CreateWarningDTO& dto);
+	bool promoteCashier(size_t managerId, size_t cashierId, const String& specialCode);
 };
