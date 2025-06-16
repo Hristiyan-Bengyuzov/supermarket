@@ -14,4 +14,5 @@ public:
 	virtual ProductType getType() const override;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
+	void print(std::ostream& os) const override;
 };

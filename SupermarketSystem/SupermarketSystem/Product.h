@@ -1,6 +1,7 @@
 #pragma once
 #include "String.h"
 #include "Serializable.h"
+#include "Printable.h"
 
 enum ProductType {
 	ByUnit,
@@ -8,7 +9,7 @@ enum ProductType {
 };
 
 static size_t productCounter = 0;
-class Product : public Serializable {
+class Product : public Serializable, public Printable {
 protected:
 	size_t id = 0;
 	String name = "";
@@ -27,4 +28,5 @@ public:
 
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
+	void print(std::ostream& os) const override;
 };

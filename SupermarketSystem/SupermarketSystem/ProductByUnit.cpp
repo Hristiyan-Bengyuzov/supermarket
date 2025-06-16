@@ -41,3 +41,9 @@ void ProductByUnit::deserialize(std::ifstream& ifs)
 	Product::deserialize(ifs);
 	ifs.read(reinterpret_cast<char*>(&quantity), sizeof(size_t));
 }
+
+void ProductByUnit::print(std::ostream& os) const
+{
+	Product::print(os);
+	os << " : " << quantity << std::endl;
+}

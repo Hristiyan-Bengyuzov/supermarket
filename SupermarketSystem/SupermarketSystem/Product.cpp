@@ -26,3 +26,8 @@ void Product::deserialize(std::ifstream& ifs)
 	ifs.read(reinterpret_cast<char*>(&categoryId), sizeof(size_t));
 	ifs.read(reinterpret_cast<char*>(&price), sizeof(double));
 }
+
+void Product::print(std::ostream& os) const
+{
+	os << "  " << id << ". " << name << " : " << price;
+}

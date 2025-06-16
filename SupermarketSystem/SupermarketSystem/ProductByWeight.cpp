@@ -35,3 +35,9 @@ void ProductByWeight::deserialize(std::ifstream& ifs)
 	Product::deserialize(ifs);
 	ifs.read(reinterpret_cast<char*>(&totalKilos), sizeof(double));
 }
+
+void ProductByWeight::print(std::ostream& os) const
+{
+	Product::print(os);
+	os << "/kg : " << totalKilos << std::endl;
+}
