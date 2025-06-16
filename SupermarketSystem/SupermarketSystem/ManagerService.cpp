@@ -129,3 +129,21 @@ bool ManagerService::promoteCashier(size_t managerId, size_t cashierId, const St
 	employeeRepo.add(newManager);
 	return employeeRepo.saveChanges();
  }
+
+// bruh this is pretty much the same as promoting :sob:
+bool ManagerService::fireCashier(size_t managerId, size_t cashierId, const String& specialCode)
+{
+	SharedPtr<Employee> managerEmp = employeeRepo.findById(managerId);
+	if (!managerEmp || managerEmp->getRole() != Role::Manager)
+		throw std::runtime_error("Invalid manager");
+
+	SharedPtr<Manager> manager(managerEmp);
+	if (manager->getSpecialCode() != specialCode)
+		throw std::runtime_error("Invalid special code");
+
+	SharedPtr<Employee> cashier = employeeRepo.findById(cashierId);
+	if (!cashier || cashier->getRole() != Role::Cashier)
+		throw std::runtime_error("Invalid cashier");
+
+	return employeeRepo.removeById(cashierId) && employeeRepo.saveChanges();
+}

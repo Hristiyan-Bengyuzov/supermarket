@@ -23,4 +23,5 @@ public:
 	void listWarnedCashiers(std::ostream& os, unsigned points) const;
 	bool warnCashier(const CreateWarningDTO& dto);
 	bool promoteCashier(size_t managerId, size_t cashierId, const String& specialCode);
+	bool fireCashier(size_t managerId, size_t cashierId, const String& specialCode);
 };
