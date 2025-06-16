@@ -34,6 +34,31 @@ Status RegisterRequest::getStatus() const
 	return status;
 }
 
+const String& RegisterRequest::getFirstName() const
+{
+	return firstName;
+}
+
+const String& RegisterRequest::getFamilyName() const
+{
+	return familyName;
+}
+
+const String& RegisterRequest::getPhoneNumber() const
+{
+	return phoneNumber;
+}
+
+unsigned RegisterRequest::getAge() const
+{
+	return age;
+}
+
+const String& RegisterRequest::getPlainPass() const
+{
+	return plainPass;
+}
+
 void RegisterRequest::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));

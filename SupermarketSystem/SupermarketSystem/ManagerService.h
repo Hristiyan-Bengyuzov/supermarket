@@ -15,4 +15,6 @@ public:
 	ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo);
 
 	void listPending(std::ostream& os) const;
+	bool approve(size_t managerId, size_t requestId, const String& specialCode);
+	bool decline(size_t managerId, size_t requestId, const String& specialCode);
 };

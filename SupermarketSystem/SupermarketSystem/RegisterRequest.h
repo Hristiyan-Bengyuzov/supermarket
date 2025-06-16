@@ -28,6 +28,11 @@ public:
 	void decline();
 	size_t getId() const;
 	Status getStatus() const;
+	const String& getFirstName() const;
+	const String& getFamilyName() const;
+	const String& getPhoneNumber() const;
+	unsigned getAge() const;
+	const String& getPlainPass() const;
 
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
