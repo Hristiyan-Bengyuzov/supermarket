@@ -29,6 +29,11 @@ size_t RegisterRequest::getId() const
 	return id;
 }
 
+Status RegisterRequest::getStatus() const
+{
+	return status;
+}
+
 void RegisterRequest::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));
@@ -52,4 +57,9 @@ void RegisterRequest::deserialize(std::ifstream& ifs)
 	phoneNumber.deserialize(ifs);
 	ifs.read(reinterpret_cast<char*>(&age), sizeof(unsigned));
 	plainPass.deserialize(ifs);
+}
+
+void RegisterRequest::print(std::ostream& os) const
+{
+	os << "  " << id << ". " << firstName << " " << familyName << " : " << phoneNumber << " : " << age << std::endl;
 }

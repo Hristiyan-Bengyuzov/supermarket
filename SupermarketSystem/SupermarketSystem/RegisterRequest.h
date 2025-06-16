@@ -1,6 +1,7 @@
 #pragma once
 #include "String.h"
 #include "Serializable.h"
+#include "Printable.h"
 
 enum class Status {
 	Pending,
@@ -9,7 +10,7 @@ enum class Status {
 };
 
 static size_t requestCounter = 0;
-class RegisterRequest : public Serializable {
+class RegisterRequest : public Serializable, public Printable {
 private:
 	size_t id = 0;
 	Status status = Status::Pending;
@@ -26,7 +27,9 @@ public:
 	void approve();
 	void decline();
 	size_t getId() const;
+	Status getStatus() const;
 
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
+	void print(std::ostream& os) const override;
 };

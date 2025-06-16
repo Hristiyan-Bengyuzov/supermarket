@@ -36,7 +36,7 @@ bool AuthService::registerEmployee(const RegisterDTO& dto)
 		case Role::Cashier: {
 			RegisterRequest request(dto.firstName, dto.lastName, dto.phoneNumber, dto.age, dto.plainPass);
 			requestRepo.add(request);
-			std::cout << "Cashier registration pending approval from a manager";
+			std::cout << "Cashier registration pending approval from a manager" << std::endl;
 			return requestRepo.saveChanges();
 		}
 		case Role::Manager: {
