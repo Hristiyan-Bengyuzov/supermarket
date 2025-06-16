@@ -168,3 +168,31 @@ bool ManagerService::deleteCategory(size_t categoryId)
 
 	return categoryRepo.removeById(categoryId) && categoryRepo.saveChanges();
 }
+
+bool ManagerService::addProduct(const CreateProductDTO& dto)
+{
+	if (productRepo.findByName(dto.name))
+		throw std::runtime_error("Product already exists");
+
+	SharedPtr<Category> category = categoryRepo.findByName(dto.categoryName);
+	if (!category)
+		throw std::runtime_error("Category not found");
+
+	Product* newProduct = nullptr;
+
+	switch (dto.type)
+	{
+	case ProductType::ByUnit: newProduct = new ProductByUnit(dto.name, category->getId(), dto.price, dto.unitsOrWeight); break;
+	case ProductType::ByWeight: newProduct = new ProductByWeight(dto.name, category->getId(), dto.price, dto.unitsOrWeight); break;
+	}
+
+	productRepo.add(newProduct);
+	return productRepo.saveChanges();
+}
+
+bool ManagerService::deleteProduct(size_t productId)
+{
+	if (!productRepo.findById(productId))
+		throw std::runtime_error("Product not found");
+	return productRepo.removeById(productId) && productRepo.saveChanges();
+}
