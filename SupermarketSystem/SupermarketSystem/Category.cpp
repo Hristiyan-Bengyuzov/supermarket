@@ -12,6 +12,11 @@ size_t Category::getId() const
 	return id;
 }
 
+const String& Category::getName() const
+{
+	return name;
+}
+
 void Category::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(size_t));

@@ -14,6 +14,7 @@ public:
 	Category(const String& name, const String& description);
 
 	size_t getId() const;
+	const String& getName() const;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };

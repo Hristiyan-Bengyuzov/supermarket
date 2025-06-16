@@ -128,7 +128,7 @@ bool ManagerService::promoteCashier(size_t managerId, size_t cashierId, const St
 	Manager* newManager = new Manager(cashierId, cashier->getName(), cashier->getFamilyName(), cashier->getPhoneNumber(), cashier->getAge(), cashier->getPass());
 	employeeRepo.add(newManager);
 	return employeeRepo.saveChanges();
- }
+}
 
 // bruh this is pretty much the same as promoting :sob:
 bool ManagerService::fireCashier(size_t managerId, size_t cashierId, const String& specialCode)
@@ -146,4 +146,25 @@ bool ManagerService::fireCashier(size_t managerId, size_t cashierId, const Strin
 		throw std::runtime_error("Invalid cashier");
 
 	return employeeRepo.removeById(cashierId) && employeeRepo.saveChanges();
+}
+
+bool ManagerService::addCategory(const CreateCategoryDTO& dto)
+{
+	if (categoryRepo.findByName(dto.name))
+		throw std::runtime_error("Category already exists");
+
+	Category newCategory(dto.name, dto.description);
+	categoryRepo.add(newCategory);
+	return categoryRepo.saveChanges();
+}
+
+bool ManagerService::deleteCategory(size_t categoryId)
+{
+	if (!categoryRepo.findById(categoryId))
+		throw std::runtime_error("Category not found");
+
+	if (productRepo.hasProductWithCategory(categoryId))
+		throw std::runtime_error("Can't delete category. There are products referencing it");
+
+	return categoryRepo.removeById(categoryId) && categoryRepo.saveChanges();
 }

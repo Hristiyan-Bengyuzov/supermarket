@@ -5,6 +5,7 @@
 #include "RegisterRequestRepository.h"
 #include "WarningRepository.h"
 #include "CreateWarningDTO.h"
+#include "CreateCategoryDTO.h"
 
 class ManagerService {
 private:
@@ -24,4 +25,6 @@ public:
 	bool warnCashier(const CreateWarningDTO& dto);
 	bool promoteCashier(size_t managerId, size_t cashierId, const String& specialCode);
 	bool fireCashier(size_t managerId, size_t cashierId, const String& specialCode);
+	bool addCategory(const CreateCategoryDTO& dto);
+	bool deleteCategory(size_t categoryId);
 };

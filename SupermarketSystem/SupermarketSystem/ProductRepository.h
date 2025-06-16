@@ -8,4 +8,6 @@ class ProductRepository : public Repository<Product> {
 	bool loadData();
 public:
 	ProductRepository();
+
+	bool hasProductWithCategory(size_t categoryId) const;
 };
