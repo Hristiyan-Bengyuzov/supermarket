@@ -1,6 +1,6 @@
 #include "ManagerService.h"
 
-ManagerService::ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo) : employeeRepo(employeeRepo), productRepo(productRepo), categoryRepo(categoryRepo), requestRepo(requestRepo)
+ManagerService::ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo, WarningRepository& warningRepo) : employeeRepo(employeeRepo), productRepo(productRepo), categoryRepo(categoryRepo), requestRepo(requestRepo), warningRepo(warningRepo)
 {
 }
 
@@ -66,4 +66,48 @@ bool ManagerService::decline(size_t managerId, size_t requestId, const String& s
 
 	request->decline();
 	return requestRepo.saveChanges();
+}
+
+void ManagerService::listWarnedCashiers(std::ostream& os, unsigned points) const
+{
+	bool found = false;
+	auto employees = employeeRepo.getAll();
+
+	for (size_t i = 0; i < employees.getSize(); i++)
+	{
+		if (employees[i]->getRole() == Role::Cashier)
+		{
+			unsigned cashierPoints = warningRepo.getPoints(employees[i]->getId());
+			if (cashierPoints >= points)
+			{
+				if (!found)
+				{
+					found = true;
+					os << "Warned cashiers: " << std::endl;
+				}
+				employees[i]->print(os);
+			}
+		}
+	}
+
+	if (!found)
+		throw std::runtime_error("No warned cashiers found");
+}
+
+bool ManagerService::warnCashier(const CreateWarningDTO& dto)
+{
+	SharedPtr<Employee> manager = employeeRepo.findById(dto.managerId);
+	if (!manager || manager->getRole() != Role::Manager)
+		throw std::runtime_error("Invalid manager");
+
+	SharedPtr<Employee> cashierEmp = employeeRepo.findById(dto.cashierId);
+	if (!cashierEmp || cashierEmp->getRole() != Role::Cashier)
+		throw std::runtime_error("Invalid cashier");
+
+	SharedPtr<Cashier> cashier = SharedPtr<Cashier>(dynamic_cast<Cashier*>(cashierEmp.get()));
+
+	Warning newWarning(dto.managerId, dto.cashierId, dto.description, dto.points);
+	warningRepo.add(newWarning);
+	cashier->addWarningId(newWarning.getId());
+	return employeeRepo.saveChanges() && warningRepo.saveChanges();
 }
