@@ -8,6 +8,13 @@ Product::Product(const String& name, size_t categoryId, double price)
 	this->price = price;
 }
 
+ProductType Product::getType(const String& str)
+{
+	if (str == "product_by_unit") return ProductType::ByUnit;
+	if (str == "product_by_weight") return ProductType::ByWeight;
+	throw std::runtime_error("Invalid type");
+}
+
 size_t Product::getId() const
 {
 	return id;
@@ -16,6 +23,11 @@ size_t Product::getId() const
 size_t Product::getCategoryId() const
 {
 	return categoryId;
+}
+
+const String& Product::getName() const
+{
+	return name;
 }
 
 void Product::serialize(std::ofstream& ofs) const

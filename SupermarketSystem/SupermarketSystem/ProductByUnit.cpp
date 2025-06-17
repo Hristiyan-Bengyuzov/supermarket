@@ -47,3 +47,13 @@ void ProductByUnit::print(std::ostream& os) const
 	Product::print(os);
 	os << " : " << quantity << std::endl;
 }
+
+size_t ProductByUnit::getQuantity() const
+{
+	return quantity;
+}
+
+void ProductByUnit::setQuantity(size_t quantity)
+{
+	this->quantity = quantity;
+}

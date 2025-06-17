@@ -41,3 +41,13 @@ void ProductByWeight::print(std::ostream& os) const
 	Product::print(os);
 	os << "/kg : " << totalKilos << std::endl;
 }
+
+double ProductByWeight::getTotalKilos() const
+{
+	return totalKilos;
+}
+
+void ProductByWeight::setTotalKilos(double kilos)
+{
+	this->totalKilos = kilos;
+}

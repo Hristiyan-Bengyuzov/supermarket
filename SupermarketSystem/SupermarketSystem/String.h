@@ -2,6 +2,7 @@
 #include <iostream>
 #pragma warning (disable: 4996)
 #include "Serializable.h"
+#include "Vector.hpp"
 
 class String : public Serializable
 {
@@ -45,6 +46,9 @@ public:
 	String substr(size_t begin, size_t howMany) const;
 	bool startsWith(const String& other) const;
 	bool endsWith(const String& other) const;
+	size_t toSizeT() const;
+	double toDouble() const;
+	Vector<String> split(char delimeter = ' ') const;
 
 	friend bool operator==(const String& lhs, const String& rhs);
 	friend bool operator!=(const String& lhs, const String& rhs);

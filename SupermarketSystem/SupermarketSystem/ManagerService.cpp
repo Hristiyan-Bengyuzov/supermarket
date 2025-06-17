@@ -190,9 +190,72 @@ bool ManagerService::addProduct(const CreateProductDTO& dto)
 	return productRepo.saveChanges();
 }
 
+bool ManagerService::loadProduct(const LoadProductDTO& dto)
+{
+	SharedPtr<Product> product = productRepo.findById(dto.productId);
+	if (!product || product->getType() != dto.type)
+		throw std::runtime_error("Product not found");
+
+	switch (dto.type)
+	{
+	case ProductType::ByUnit: {
+		auto unitProduct = dynamic_cast<ProductByUnit*>(product.get());
+		if (!unitProduct) throw std::runtime_error("Invalid product type");
+		unitProduct->setQuantity(unitProduct->getQuantity() + dto.unitsOrWeight);
+		return productRepo.saveChanges();
+	}
+	case ProductType::ByWeight: {
+		auto weightProduct = dynamic_cast<ProductByWeight*>(product.get());
+		if (!weightProduct) throw std::runtime_error("Invalid product type");
+		weightProduct->setTotalKilos(weightProduct->getTotalKilos() + dto.unitsOrWeight);
+		return productRepo.saveChanges();
+	}
+	default: throw std::runtime_error("Unknown product type");
+	}
+}
 bool ManagerService::deleteProduct(size_t productId)
 {
 	if (!productRepo.findById(productId))
 		throw std::runtime_error("Product not found");
 	return productRepo.removeById(productId) && productRepo.saveChanges();
+}
+
+bool ManagerService::loadProducts(const String& file)
+{
+	if (!file.c_str())
+		throw std::runtime_error("Invalid file");
+
+	std::ifstream ifs(file.c_str());
+
+	if (!ifs.is_open())
+		throw std::runtime_error("File not found");
+
+	char buffer[1024];
+	while (ifs.getline(buffer, 1024))
+	{
+		String line(buffer);
+		Vector<String> tokens = line.split(':');
+
+		try
+		{
+			if (tokens[0] == "NEW")
+			{
+				ProductType type = Product::getType(tokens[1]);
+				CreateProductDTO dto = { type, tokens[2], tokens[3], tokens[4].toDouble(), tokens[5].toDouble() };
+				addProduct(dto);
+			}
+			else
+			{
+				ProductType type = Product::getType(tokens[0]);
+				LoadProductDTO dto = { type, tokens[1].toSizeT(), tokens[2].toDouble() };
+				loadProduct(dto);
+			}
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Error: " << e.what() << std::endl;
+			return false;
+		}
+	}
+	return true;
 }

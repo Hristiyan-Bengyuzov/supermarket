@@ -172,6 +172,71 @@ bool String::endsWith(const String& other) const
 	return true;
 }
 
+size_t String::toSizeT() const
+{
+	size_t result = 0;
+	for (size_t i = 0; i < size; ++i) {
+		if (data[i] < '0' || data[i] > '9')
+			throw std::invalid_argument("String contains non-digit characters");
+		result = result * 10 + (data[i] - '0');
+	}
+	return result;
+}
+
+double String::toDouble() const
+{
+	double result = 0.0;
+	double fraction = 0.0;
+	bool isFraction = false;
+	double divisor = 10.0;
+
+	for (size_t i = 0; i < size; ++i) {
+		if (data[i] == '.') {
+			if (isFraction)
+				throw std::invalid_argument("String contains multiple decimal points");
+			isFraction = true;
+		}
+		else if (data[i] >= '0' && data[i] <= '9') {
+			if (!isFraction) {
+				result = result * 10 + (data[i] - '0');
+			}
+			else {
+				fraction += (data[i] - '0') / divisor;
+				divisor *= 10;
+			}
+		}
+		else {
+			throw std::invalid_argument("String contains invalid characters");
+		}
+	}
+
+	return result + fraction;
+}
+
+Vector<String> String::split(char delimeter) const
+{
+	Vector<String> result;
+	size_t start = 0;
+	size_t end = 0;
+
+	while (end <= size) {
+		if (end == size || data[end] == delimeter) {
+			if (start != end) {
+				size_t length = end - start;
+				char* substring = new char[length + 1];
+				strncpy(substring, data + start, length);
+				substring[length] = '\0';
+				result.push_back(String(substring));
+				delete[] substring;
+			}
+			start = end + 1;
+		}
+		end++;
+	}
+
+	return result;
+}
+
 bool operator==(const String& lhs, const String& rhs)
 {
 	return strcmp(lhs.data, rhs.data) == 0;

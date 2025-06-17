@@ -7,6 +7,7 @@
 #include "CreateWarningDTO.h"
 #include "CreateCategoryDTO.h"
 #include "CreateProductDTO.h"
+#include "LoadProductDTO.h"
 
 class ManagerService {
 private:
@@ -29,5 +30,7 @@ public:
 	bool addCategory(const CreateCategoryDTO& dto);
 	bool deleteCategory(size_t categoryId);
 	bool addProduct(const CreateProductDTO& dto);
+	bool loadProduct(const LoadProductDTO& dto);
 	bool deleteProduct(size_t productId);
+	bool loadProducts(const String& file);
 };
