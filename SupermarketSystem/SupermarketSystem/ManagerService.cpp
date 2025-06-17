@@ -1,6 +1,6 @@
 #include "ManagerService.h"
 
-ManagerService::ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo, WarningRepository& warningRepo) : employeeRepo(employeeRepo), productRepo(productRepo), categoryRepo(categoryRepo), requestRepo(requestRepo), warningRepo(warningRepo)
+ManagerService::ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo, WarningRepository& warningRepo, GiftCardRepository& giftCardRepo) : employeeRepo(employeeRepo), productRepo(productRepo), categoryRepo(categoryRepo), requestRepo(requestRepo), warningRepo(warningRepo), giftCardRepo(giftCardRepo)
 {
 }
 
@@ -258,4 +258,60 @@ bool ManagerService::loadProducts(const String& file)
 		}
 	}
 	return true;
+}
+
+bool ManagerService::loadGiftCards(const String& file)
+{
+	if (!file.c_str())
+		throw std::runtime_error("Invalid file");
+
+	std::ifstream ifs(file.c_str());
+
+	if (!ifs.is_open())
+		throw std::runtime_error("File not found");
+
+	char buffer[1024];
+	while (ifs.getline(buffer, 1024))
+	{
+		String line(buffer);
+		Vector<String> tokens = line.split(':');
+
+		try
+		{
+			GiftCardType type = GiftCard::getType(tokens[0]);
+			GiftCard* giftCard = nullptr;
+
+			switch (type)
+			{
+				case GiftCardType::Single: {
+					giftCard = new SingleCategoryGiftCard(tokens[2].toSizeT(), categoryRepo.getCategoryIdByName(tokens[1]));
+					break;
+				}
+				case GiftCardType::Multiple: {
+					size_t count = tokens[1].toSizeT();
+					Vector<size_t> categoryIds;
+					for (size_t i = 0; i < count; i++)
+					{
+						categoryIds.push_back(categoryRepo.getCategoryIdByName(tokens[2 + i]));
+					}
+					giftCard = new MultipleCategoryGiftCard(tokens[tokens.getSize() - 1].toSizeT(), categoryIds);
+					break;
+				}
+				case GiftCardType::All: {
+					giftCard = new AllProductsGiftCard(tokens[1].toSizeT());
+					break;
+				}
+			}
+
+			giftCardRepo.add(giftCard);
+		}
+		catch (const std::exception& e)
+		{
+			std::cout << "Error: " << e.what() << std::endl;
+			giftCardRepo.saveChanges();
+			return false;
+		}
+	}
+
+	return giftCardRepo.saveChanges();
 }

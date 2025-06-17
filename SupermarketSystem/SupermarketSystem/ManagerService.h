@@ -3,6 +3,7 @@
 #include "ProductRepository.h"
 #include "CategoryRepository.h"
 #include "RegisterRequestRepository.h"
+#include "GiftCardRepository.h"
 #include "WarningRepository.h"
 #include "CreateWarningDTO.h"
 #include "CreateCategoryDTO.h"
@@ -16,9 +17,10 @@ private:
 	CategoryRepository& categoryRepo;
 	RegisterRequestRepository& requestRepo;
 	WarningRepository& warningRepo;
+	GiftCardRepository& giftCardRepo;
 
 public:
-	ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo, WarningRepository& warningRepo);
+	ManagerService(EmployeeRepository& employeeRepo, ProductRepository& productRepo, CategoryRepository& categoryRepo, RegisterRequestRepository& requestRepo, WarningRepository& warningRepo, GiftCardRepository& giftCardRepo);
 
 	void listPending(std::ostream& os) const;
 	bool approve(size_t managerId, size_t requestId, const String& specialCode);
@@ -33,4 +35,5 @@ public:
 	bool loadProduct(const LoadProductDTO& dto);
 	bool deleteProduct(size_t productId);
 	bool loadProducts(const String& file);
+	bool loadGiftCards(const String& file);
 };

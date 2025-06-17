@@ -18,6 +18,19 @@ GiftCard::GiftCard(ushort percentage)
 	this->code = generateCode();
 }
 
+GiftCardType GiftCard::getType(const String& str)
+{
+	if (str == "single") return GiftCardType::Single;
+	if (str == "multiple") return GiftCardType::Multiple;
+	if (str == "all") return GiftCardType::All;
+	throw std::runtime_error("Invalid giftcard type");
+}
+
+ushort GiftCard::getPercentage() const
+{
+	return percentage;
+}
+
 size_t GiftCard::getId() const
 {
 	return id;

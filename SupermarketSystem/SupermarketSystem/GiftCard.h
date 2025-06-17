@@ -24,6 +24,8 @@ public:
 	GiftCard(ushort percentage);
 	virtual ~GiftCard() = default;
 	virtual GiftCardType getType() const = 0;
+	static GiftCardType getType(const String& str);
+	ushort getPercentage() const;
 
 	size_t getId() const;
 	void serialize(std::ofstream& ofs) const override;
