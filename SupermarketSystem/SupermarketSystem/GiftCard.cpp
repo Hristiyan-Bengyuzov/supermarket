@@ -22,3 +22,20 @@ size_t GiftCard::getId() const
 {
 	return id;
 }
+
+void GiftCard::serialize(std::ofstream& ofs) const
+{
+	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));
+	code.serialize(ofs);
+	ofs.write(reinterpret_cast<const char*>(&percentage), sizeof(ushort));
+}
+
+void GiftCard::deserialize(std::ifstream& ifs)
+{
+	ifs.read(reinterpret_cast<char*>(&id), sizeof(id));
+	if (id >= giftCardCounter)
+		giftCardCounter = id + 1;
+
+	code.deserialize(ifs);
+	ifs.read(reinterpret_cast<char*>(&percentage), sizeof(ushort));
+}
