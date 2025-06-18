@@ -36,6 +36,11 @@ size_t GiftCard::getId() const
 	return id;
 }
 
+const String& GiftCard::getCode() const
+{
+	return code;
+}
+
 void GiftCard::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(id));

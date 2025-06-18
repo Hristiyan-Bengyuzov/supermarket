@@ -10,6 +10,7 @@ public:
 	MultipleCategoryGiftCard(ushort percentage, const Vector<size_t>& categoryIds);
 	GiftCardType getType() const override;
 	void addCategoryId(size_t id);
+	const Vector<size_t>& getCategoryIds() const;
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };

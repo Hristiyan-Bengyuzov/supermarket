@@ -4,6 +4,15 @@ Cashier::Cashier(const String& name, const String& familyName, const String& pho
 {
 }
 
+int Cashier::removeLastWarning()
+{
+	if (warningIds.getSize() == 0)
+		return -1;
+	size_t lastWarningId = warningIds[warningIds.getSize() - 1];
+	warningIds.pop_back();
+	return lastWarningId;
+}
+
 void Cashier::addWarningId(size_t warningId)
 {
 	warningIds.push_back(warningId);
@@ -12,6 +21,16 @@ void Cashier::addWarningId(size_t warningId)
 Role Cashier::getRole() const
 {
 	return Role::Cashier;
+}
+
+void Cashier::completeTransaction()
+{
+	transactionsMade++;
+}
+
+size_t Cashier::getTransactionsMade() const
+{
+	return transactionsMade;
 }
 
 void Cashier::serialize(std::ofstream& ofs) const

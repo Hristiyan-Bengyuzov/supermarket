@@ -37,3 +37,15 @@ GiftCardRepository::GiftCardRepository() : Repository("giftcards.bin")
 {
 	loadData();
 }
+
+SharedPtr<GiftCard> GiftCardRepository::findByCode(const String& code) const
+{
+	for (size_t i = 0; i < items.getSize(); i++)
+	{
+		if (items[i]->getCode() == code)
+		{
+			return items[i];
+		}
+	}
+	return SharedPtr<GiftCard>();
+}

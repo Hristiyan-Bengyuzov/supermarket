@@ -18,7 +18,7 @@ public:
 	Transaction(size_t cashierId);
 
 	void addItem(const TransactionItem& item);
-	const Vector<TransactionItem>& getItems() const;
+	Vector<TransactionItem>& getItemsMutable();
 	void calculateTotalPrice();
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;

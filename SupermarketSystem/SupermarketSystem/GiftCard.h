@@ -28,6 +28,7 @@ public:
 	ushort getPercentage() const;
 
 	size_t getId() const;
+	const String& getCode() const;	
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };

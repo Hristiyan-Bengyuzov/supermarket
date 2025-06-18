@@ -15,6 +15,11 @@ void MultipleCategoryGiftCard::addCategoryId(size_t id)
 	categoryIds.push_back(id);
 }
 
+const Vector<size_t>& MultipleCategoryGiftCard::getCategoryIds() const
+{
+	return categoryIds;
+}
+
 void MultipleCategoryGiftCard::serialize(std::ofstream& ofs) const
 {
 	GiftCardType type = getType();

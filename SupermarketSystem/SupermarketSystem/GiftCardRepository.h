@@ -9,4 +9,5 @@ class GiftCardRepository : public Repository<GiftCard> {
 	bool loadData();
 public:
 	GiftCardRepository();
+	SharedPtr<GiftCard> findByCode(const String& code) const;
 };

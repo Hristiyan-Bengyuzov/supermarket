@@ -9,6 +9,7 @@ public:
 	SingleCategoryGiftCard() = default;
 	SingleCategoryGiftCard(ushort percentage, size_t categoryId);
 	GiftCardType getType() const override;
+	size_t getCategoryId() const;	
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 };

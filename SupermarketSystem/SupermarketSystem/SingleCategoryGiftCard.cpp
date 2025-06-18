@@ -10,6 +10,11 @@ GiftCardType SingleCategoryGiftCard::getType() const
 	return	GiftCardType::Single;
 }
 
+size_t SingleCategoryGiftCard::getCategoryId() const
+{
+	return categoryId;
+}
+
 void SingleCategoryGiftCard::serialize(std::ofstream& ofs) const
 {
 	GiftCardType type = getType();

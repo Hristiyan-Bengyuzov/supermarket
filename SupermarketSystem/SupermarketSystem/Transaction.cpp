@@ -25,7 +25,7 @@ void Transaction::addItem(const TransactionItem& item)
 	calculateTotalPrice();
 }
 
-const Vector<TransactionItem>& Transaction::getItems() const
+Vector<TransactionItem>& Transaction::getItemsMutable()
 {
 	return items;
 }
