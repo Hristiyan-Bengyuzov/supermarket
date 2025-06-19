@@ -12,6 +12,8 @@
 #include "AuthService.h"
 #include "WarningRepository.h"
 #include "EmployeeService.h"
+#include "GiftCardRepository.h"
+#include "CommandRegistry.h"
 
 int main()
 {
@@ -20,9 +22,11 @@ int main()
 	CategoryRepository repo3;
 	RegisterRequestRepository repo4;
 	WarningRepository repo5;
+	GiftCardRepository repo6;
 
 	AuthService authService(repo, repo4);
-	ManagerService service(repo, repo2, repo3, repo4, repo5);
+	ManagerService service(repo, repo2, repo3, repo4, repo5, repo6);
+	ProductService productService(repo2, repo3);
 	EmployeeService empService(repo);
 
 	if (repo.count() == 0)
@@ -32,6 +36,18 @@ int main()
 		repo.saveChanges();
 	}
 
-	//service.promoteCashier(0, 1, "5IR614c");
-	empService.listWorkers(std::cout);
+	if (repo3.count() == 0)
+	{
+		repo3.add(new Category{ "Fruit","Fruit are really cool" });
+		repo3.add(new Category{ "Vegetables", "Vegetables are really cool" });
+		repo3.saveChanges();
+	}
+
+	CommandRegistry registry(authService, empService, productService);
+
+	while (true)
+	{
+		String command = String::readLine("Enter command: ");
+		registry.executeCommand(command);
+	}
 }

@@ -60,6 +60,13 @@ const Password& Employee::getPass() const
 	return password;
 }
 
+Role Employee::getRole(const String& str)
+{
+	if (str == "cashier") return Role::Cashier;
+	if (str == "manager") return Role::Manager;
+	throw std::runtime_error("Invalid role");
+}
+
 bool Employee::checkPass(const String& plainPass) const
 {
 	return password == plainPass;

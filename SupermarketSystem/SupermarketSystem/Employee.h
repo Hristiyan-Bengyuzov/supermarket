@@ -5,7 +5,8 @@
 
 enum class Role {
 	Cashier,
-	Manager
+	Manager,
+	None
 };
 
 static size_t counter = 0;
@@ -34,6 +35,7 @@ public:
 	const Password& getPass() const;
 
 	virtual Role getRole() const = 0;
+	static Role getRole(const String& str);
 
 	bool checkPass(const String& plainPass) const;
 

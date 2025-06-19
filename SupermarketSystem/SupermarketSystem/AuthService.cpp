@@ -13,7 +13,7 @@ bool AuthService::login(size_t employeeId, const String& plainPass)
 	if (!employee)
 		throw std::runtime_error("Employee not found");
 
-	if (employee->checkPass(plainPass))
+	if (!employee->checkPass(plainPass))
 		throw std::runtime_error("Invalid password");
 
 	currentEmployee = employee;

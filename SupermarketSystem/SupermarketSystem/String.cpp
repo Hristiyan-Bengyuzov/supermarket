@@ -312,6 +312,18 @@ void String::deserialize(std::ifstream& ifs)
 	capacity = newSize + 1;
 }
 
+String String::readLine(const char* message)
+{
+	std::cout << message;
+	char buffer[1025];
+	if (!std::cin.getline(buffer, sizeof(buffer)))
+	{
+		throw std::runtime_error("Error reading input");
+	}
+
+	return String(buffer);
+}
+
 String::~String()
 {
 	free();

@@ -65,5 +65,7 @@ public:
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;
 
+	static String readLine(const char* message);
+
 	~String();
 };
