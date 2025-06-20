@@ -1,12 +1,20 @@
 #include "CommandRegistry.h"
 
-CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService) : authService(authService), employeeService(employeeService), productService(productService)
+CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService) : authService(authService), employeeService(employeeService), productService(productService), managerService(managerService)
 {
 	commands.push_back(SharedPtr<Command>(new RegisterCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new LoginCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new ListUserCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new ListWorkersCommand(employeeService)));
 	commands.push_back(SharedPtr<Command>(new ListProductsCommand(productService)));
+	commands.push_back(SharedPtr<Command>(new LeaveCommand(employeeService)));
+	commands.push_back(SharedPtr<Command>(new LogoutCommand(authService)));
+	commands.push_back(SharedPtr<Command>(new ListPendingCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new ApproveCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new DeclineCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new ListWarnedCashiersCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new WarnCashierCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new PromoteCashierCommand(managerService)));
 }
 void CommandRegistry::executeCommand(const String& commandLine)
 {

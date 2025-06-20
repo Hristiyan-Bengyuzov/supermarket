@@ -5,11 +5,21 @@
 #include "AuthService.h"
 #include "EmployeeService.h"
 #include "ProductService.h"
+#include "ManagerService.h"
 #include "RegisterCommand.h"
 #include "LoginCommand.h"
 #include "ListUserCommand.h"
 #include "ListWorkersCommand.h"
 #include "ListProductsCommand.h"
+#include "LeaveCommand.h"
+#include "LogoutCommand.h"
+#include "ListPendingCommand.h"
+#include "ApproveCommand.h"
+#include "DeclineCommand.h"
+#include "ListWarnedCashiersCommand.h"
+#include "WarnCashierCommand.h"
+#include "PromoteCashierCommand.h"
+
 
 class CommandRegistry {
 private:
@@ -17,9 +27,10 @@ private:
 	AuthService& authService;
 	EmployeeService& employeeService;
 	ProductService& productService;
+	ManagerService& managerService;
 
 public:
-	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService);
+	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService);
 	void executeCommand(const String& commandLine);
 	void showHelp() const;
 };

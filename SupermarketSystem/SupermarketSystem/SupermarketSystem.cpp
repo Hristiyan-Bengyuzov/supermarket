@@ -43,7 +43,7 @@ int main()
 		repo3.saveChanges();
 	}
 
-	CommandRegistry registry(authService, empService, productService);
+	CommandRegistry registry(authService, empService, productService, service);
 
 	while (true)
 	{
