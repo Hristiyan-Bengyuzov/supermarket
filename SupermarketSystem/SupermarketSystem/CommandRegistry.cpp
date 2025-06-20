@@ -12,10 +12,18 @@ CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& empl
 	commands.push_back(SharedPtr<Command>(new ListPendingCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new ApproveCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new DeclineCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new ListWarnedCashiersCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new ListWarnedCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new WarnCashierCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new PromoteCashierCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new FireCashierCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new AddCategoryCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new DeleteCategoryCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new AddProductCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new DeleteProductCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new LoadProductsCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new LoadGiftCardsCommand(managerService)));
 }
+
 void CommandRegistry::executeCommand(const String& commandLine)
 {
 	Vector<String> args = commandLine.split(' ');

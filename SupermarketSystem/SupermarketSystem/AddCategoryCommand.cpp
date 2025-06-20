@@ -1,0 +1,37 @@
+#include "AddCategoryCommand.h"
+
+AddCategoryCommand::AddCategoryCommand(ManagerService& managerService) : managerService(managerService)
+{
+}
+
+void AddCategoryCommand::execute(const Vector<String> args, size_t employeeId)
+{
+	if (args.getSize() != 3)
+	{
+		showHelp();
+		return;
+	}
+
+	String categoryName = args[1];
+	String categoryDescription = args[2];
+	CreateCategoryDTO categoryDTO{ categoryName, categoryDescription };
+	if (managerService.addCategory(categoryDTO))
+	{
+		std::cout << SUCCESS << "Category added successfully." << RESET << std::endl;
+	}
+}
+
+const String AddCategoryCommand::getName() const
+{
+	return String("add-category");
+}
+
+bool AddCategoryCommand::canExecute(Role role, bool isAuthenticated) const
+{
+	return role == Role::Manager && isAuthenticated;
+}
+
+void AddCategoryCommand::showHelp() const
+{
+	CommandUtils::printCommandWithArgs(getName(), "<category_name> <category_description>");
+}

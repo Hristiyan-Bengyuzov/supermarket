@@ -1,7 +1,8 @@
 #include "String.h"
+#include "Constants.h"
 
-#include "String.h"
 
+using namespace Constants;
 String::String() : String("")
 {
 }
@@ -322,6 +323,19 @@ String String::readLine(const char* message)
 	}
 
 	return String(buffer);
+}
+
+String String::readLineNotEmpty(const char* message)
+{
+	while (true)
+	{
+		String line = readLine(message);
+		if (line.getSize() > 0)
+		{
+			return line;
+		}
+		std::cout << FAILURE << "Input cannot be empty. Please try again." << RESET << std::endl;
+	}
 }
 
 String::~String()

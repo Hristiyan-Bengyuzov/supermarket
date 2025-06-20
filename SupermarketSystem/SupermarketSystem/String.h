@@ -66,6 +66,7 @@ public:
 	void deserialize(std::ifstream& ifs) override;
 
 	static String readLine(const char* message);
+	static String readLineNotEmpty(const char* message);
 
 	~String();
 };

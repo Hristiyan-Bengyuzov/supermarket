@@ -16,10 +16,16 @@
 #include "ListPendingCommand.h"
 #include "ApproveCommand.h"
 #include "DeclineCommand.h"
-#include "ListWarnedCashiersCommand.h"
+#include "ListWarnedCommand.h"
 #include "WarnCashierCommand.h"
 #include "PromoteCashierCommand.h"
-
+#include "FireCashierCommand.h"
+#include "AddCategoryCommand.h"
+#include "DeleteCategoryCommand.h"
+#include "AddProductCommand.h"
+#include "DeleteProductCommand.h"
+#include "LoadProductsCommand.h"
+#include "LoadGiftCardsCommand.h"
 
 class CommandRegistry {
 private:
