@@ -1,6 +1,6 @@
 #include "SellCommand.h"
 
-SellCommand::SellCommand(CashierService& cashierService, ProductService& productService) : cashierService(cashierService), productService(productService)
+SellCommand::SellCommand(CashierService& cashierService, ProductService& productService, LogService& logService) : cashierService(cashierService), productService(productService), logService(logService)
 {
 }
 
@@ -32,6 +32,7 @@ void SellCommand::execute(const Vector<String> args, size_t employeeId)
 		voucher = String::readLineNotEmpty("Enter voucher: ");
 
 	if (cashierService.sell(employeeId, transaction, voucher)) {
+		logService.log(employeeId, "Cashier with id " + String::parseFrom(employeeId) + " completed a transaction");
 		std::cout << "Transaction complete!\n";
 		std::cout << "Receipt saved as: receipt_" << transaction.getId() << ".txt\n";
 		std::cout << "Total: " << transaction.getTotalPrice() << " lv.\n";

@@ -1,6 +1,6 @@
 #include "LoadProductsCommand.h"
 
-LoadProductsCommand::LoadProductsCommand(ManagerService& managerService) : managerService(managerService)
+LoadProductsCommand::LoadProductsCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -14,6 +14,7 @@ void LoadProductsCommand::execute(const Vector<String> args, size_t employeeId)
 	const String& filename = args[1];
 	if (managerService.loadProducts(filename))
 	{
+		logService.log(employeeId, "Loaded products from file: " + filename);
 		std::cout << SUCCESS << "Products loaded successfully from " << filename << "." << RESET << std::endl;
 	}
 }

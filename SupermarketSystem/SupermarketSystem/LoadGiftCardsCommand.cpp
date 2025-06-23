@@ -1,6 +1,6 @@
 #include "LoadGiftCardsCommand.h"
 
-LoadGiftCardsCommand::LoadGiftCardsCommand(ManagerService& managerService) : managerService(managerService)
+LoadGiftCardsCommand::LoadGiftCardsCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -14,6 +14,7 @@ void LoadGiftCardsCommand::execute(const Vector<String> args, size_t employeeId)
 	const String& filePath = args[1];
 	if (managerService.loadGiftCards(filePath))
 	{
+		logService.log(employeeId, "Loaded gift cards from file: " + filePath);
 		std::cout << SUCCESS << "Gift cards loaded successfully from " << filePath << "." << RESET << std::endl;
 	}
 }

@@ -1,6 +1,6 @@
 #include "FireCashierCommand.h"
 
-FireCashierCommand::FireCashierCommand(ManagerService& managerService) : managerService(managerService)
+FireCashierCommand::FireCashierCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -16,6 +16,7 @@ void FireCashierCommand::execute(const Vector<String> args, size_t employeeId)
 	String specialCode = args[2];
 	if (managerService.fireCashier(employeeId, cashierId, specialCode))
 	{
+		logService.log(employeeId, "Fired cashier with id: " + String::parseFrom(cashierId));
 		std::cout << SUCCESS << "Cashier fired successfully." << RESET << std::endl;
 	}
 }

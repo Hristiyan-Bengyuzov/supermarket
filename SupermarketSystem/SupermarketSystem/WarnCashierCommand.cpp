@@ -1,7 +1,7 @@
 #include "WarnCashierCommand.h"
 #include "CreateWarningDTO.h"
 
-WarnCashierCommand::WarnCashierCommand(ManagerService& managerService) : managerService(managerService)
+WarnCashierCommand::WarnCashierCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -19,6 +19,7 @@ void WarnCashierCommand::execute(const Vector<String> args, size_t employeeId)
 	CreateWarningDTO warningDTO{ employeeId, cashierId, points, description };
 	if (managerService.warnCashier(warningDTO))
 	{
+		logService.log(employeeId, "Warned cashier with id " + String::parseFrom(cashierId));
 		std::cout << SUCCESS << "Cashier warned successfully." << RESET << std::endl;
 	}
 }

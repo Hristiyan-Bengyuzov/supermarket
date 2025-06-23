@@ -1,6 +1,6 @@
 #include "DeleteCategoryCommand.h"
 
-DeleteCategoryCommand::DeleteCategoryCommand(ManagerService& managerService) : managerService(managerService)
+DeleteCategoryCommand::DeleteCategoryCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -15,6 +15,7 @@ void DeleteCategoryCommand::execute(const Vector<String> args, size_t employeeId
 	size_t categoryId = args[1].toSizeT();
 	if (managerService.deleteCategory(categoryId))
 	{
+		logService.log(employeeId, "Deleted category with id " + String::parseFrom(categoryId));
 		std::cout << SUCCESS << "Category deleted successfully." << RESET << std::endl;
 	}
 }

@@ -1,6 +1,6 @@
 #include "AddProductCommand.h"
 
-AddProductCommand::AddProductCommand(ManagerService& managerService) : managerService(managerService)
+AddProductCommand::AddProductCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -21,6 +21,7 @@ void AddProductCommand::execute(const Vector<String> args, size_t employeeId)
 	CreateProductDTO dto = { productType, productName, category, price, quantity };
 	if (managerService.addProduct(dto))
 	{
+		logService.log(employeeId, "Added product " + productName + " with category " + category);
 		std::cout << SUCCESS << "Successfully added product" << RESET << std::endl;
 	}
 }

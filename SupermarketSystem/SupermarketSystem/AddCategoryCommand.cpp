@@ -1,6 +1,6 @@
 #include "AddCategoryCommand.h"
 
-AddCategoryCommand::AddCategoryCommand(ManagerService& managerService) : managerService(managerService)
+AddCategoryCommand::AddCategoryCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -17,6 +17,7 @@ void AddCategoryCommand::execute(const Vector<String> args, size_t employeeId)
 	CreateCategoryDTO categoryDTO{ categoryName, categoryDescription };
 	if (managerService.addCategory(categoryDTO))
 	{
+		logService.log(employeeId, "Added category " + categoryName);
 		std::cout << SUCCESS << "Category added successfully." << RESET << std::endl;
 	}
 }

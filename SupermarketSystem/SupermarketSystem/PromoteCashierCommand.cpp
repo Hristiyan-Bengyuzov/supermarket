@@ -1,6 +1,6 @@
 #include "PromoteCashierCommand.h"
 
-PromoteCashierCommand::PromoteCashierCommand(ManagerService& managerService) : managerService(managerService)
+PromoteCashierCommand::PromoteCashierCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -16,6 +16,7 @@ void PromoteCashierCommand::execute(const Vector<String> args, size_t employeeId
 	String specialCode = args[2];
 	if (managerService.promoteCashier(employeeId, cashierId, specialCode))
 	{
+		logService.log(employeeId, "Promoted cashier with ID: " + String::parseFrom(cashierId));
 		std::cout << SUCCESS << "Cashier promoted successfully." << RESET << std::endl;
 	}
 }

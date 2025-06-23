@@ -1,6 +1,6 @@
 #include "DeleteProductCommand.h"
 
-DeleteProductCommand::DeleteProductCommand(ManagerService& managerService) : managerService(managerService)
+DeleteProductCommand::DeleteProductCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -15,6 +15,7 @@ void DeleteProductCommand::execute(const Vector<String> args, size_t employeeId)
 	size_t productId = args[1].toSizeT();
 	if (managerService.deleteProduct(productId))
 	{
+		logService.log(employeeId, "Deleted product with id: " + String::parseFrom(productId));
 		std::cout << SUCCESS << "Product deleted successfully." << RESET << std::endl;
 	}
 }

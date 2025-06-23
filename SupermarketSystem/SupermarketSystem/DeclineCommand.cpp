@@ -1,6 +1,6 @@
 #include "DeclineCommand.h"
 
-DeclineCommand::DeclineCommand(ManagerService& managerService) : managerService(managerService)
+DeclineCommand::DeclineCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -14,6 +14,7 @@ void DeclineCommand::execute(const Vector<String> args, size_t employeeId)
 
 	if (managerService.decline(employeeId, args[1].toSizeT(), args[2]))
 	{
+		logService.log(employeeId, "Declined registration request");
 		std::cout << SUCCESS << "Request declined successfully." << RESET << std::endl;
 	}
 }

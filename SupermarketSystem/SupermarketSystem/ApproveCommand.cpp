@@ -1,6 +1,6 @@
 #include "ApproveCommand.h"
 
-ApproveCommand::ApproveCommand(ManagerService& managerService) : managerService(managerService)
+ApproveCommand::ApproveCommand(ManagerService& managerService, LogService& logService) : managerService(managerService), logService(logService)
 {
 }
 
@@ -14,6 +14,7 @@ void ApproveCommand::execute(const Vector<String> args, size_t employeeId)
 
 	if (managerService.approve(employeeId, args[1].toSizeT(), args[2]))
 	{
+		logService.log(employeeId, "Approved registration request");
 		std::cout << SUCCESS << "Request approved successfully." << RESET << std::endl;
 	}
 }

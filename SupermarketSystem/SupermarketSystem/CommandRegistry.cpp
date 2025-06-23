@@ -1,27 +1,27 @@
 #include "CommandRegistry.h"
 
-CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService) : authService(authService), employeeService(employeeService), productService(productService), managerService(managerService), cashierService(cashierService)
+CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService, LogService& logService) : authService(authService), employeeService(employeeService), productService(productService), managerService(managerService), cashierService(cashierService), logService(logService)
 {
 	commands.push_back(SharedPtr<Command>(new RegisterCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new LoginCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new ListUserCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new ListWorkersCommand(employeeService)));
 	commands.push_back(SharedPtr<Command>(new ListProductsCommand(productService)));
-	commands.push_back(SharedPtr<Command>(new LeaveCommand(employeeService)));
+	commands.push_back(SharedPtr<Command>(new LeaveCommand(employeeService, logService)));
 	commands.push_back(SharedPtr<Command>(new LogoutCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new ListPendingCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new ApproveCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new DeclineCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new WarnCashierCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new PromoteCashierCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new FireCashierCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new AddCategoryCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new DeleteCategoryCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new AddProductCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new DeleteProductCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new LoadProductsCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new LoadGiftCardsCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new SellCommand(cashierService, productService)));
+	commands.push_back(SharedPtr<Command>(new ApproveCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new DeclineCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new WarnCashierCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new PromoteCashierCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new FireCashierCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new AddCategoryCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new DeleteCategoryCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new AddProductCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new DeleteProductCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new LoadProductsCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new LoadGiftCardsCommand(managerService, logService)));
+	commands.push_back(SharedPtr<Command>(new SellCommand(cashierService, productService, logService)));
 	commands.push_back(SharedPtr<Command>(new ListTransactionsCommand(employeeService)));
 }
 

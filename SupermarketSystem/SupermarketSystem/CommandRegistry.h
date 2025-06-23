@@ -7,6 +7,7 @@
 #include "ProductService.h"
 #include "ManagerService.h"
 #include "CashierService.h"
+#include "LogService.h"
 #include "RegisterCommand.h"
 #include "LoginCommand.h"
 #include "ListUserCommand.h"
@@ -37,9 +38,10 @@ private:
 	ProductService& productService;
 	ManagerService& managerService;
 	CashierService& cashierService;
+	LogService& logService;
 
 public:
-	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService);
+	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService, LogService& logService);
 	void executeCommand(const String& commandLine);
 	void showHelp() const;
 };

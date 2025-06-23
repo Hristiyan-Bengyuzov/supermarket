@@ -1,6 +1,6 @@
 #include "LeaveCommand.h"
 
-LeaveCommand::LeaveCommand(EmployeeService& employeeService) : employeeService(employeeService)
+LeaveCommand::LeaveCommand(EmployeeService& employeeService, LogService& logService) : employeeService(employeeService), logService(logService)
 {
 }
 
@@ -14,6 +14,7 @@ void LeaveCommand::execute(const Vector<String> args, size_t employeeId)
 
 	if (employeeService.leave(employeeId))
 	{
+		logService.log(employeeId, "Employee with id " + String::parseFrom(employeeId) + " left their j*b");
 		std::cout << SUCCESS << "Successfully left." << RESET << std::endl;
 	}
 }
