@@ -1,21 +1,9 @@
 #include "Transaction.h"
 
-String Transaction::getCurrentDate() const
-{
-	time_t now = time(0);
-	tm* localTime = localtime(&now);
-
-	char buffer[11];
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d", localTime);
-
-	return String(buffer);
-}
-
 Transaction::Transaction(size_t cashierId)
 {
 	this->id = transactionCounter++;
 	this->cashierId = cashierId;
-	this->date = getCurrentDate();
 	calculateTotalPrice();
 }
 
@@ -24,9 +12,9 @@ size_t Transaction::getCashierId() const
 	return cashierId;
 }
 
-const String& Transaction::getDate() const
+const DateTime& Transaction::getDate() const
 {
-	return date;
+	return dateTime;
 }
 
 double Transaction::getTotalPrice() const
@@ -63,7 +51,7 @@ void Transaction::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(size_t));
 	ofs.write(reinterpret_cast<const char*>(&cashierId), sizeof(size_t));
-	date.serialize(ofs);
+	dateTime.serialize(ofs);
 	ofs.write(reinterpret_cast<const char*>(&totalPrice), sizeof(double));
 	size_t itemsSize = items.getSize();
 	ofs.write(reinterpret_cast<const char*>(&itemsSize), sizeof(size_t));
@@ -79,7 +67,7 @@ void Transaction::deserialize(std::ifstream& ifs)
 	if (id >= transactionCounter)
 		transactionCounter = id + 1;
 	ifs.read(reinterpret_cast<char*>(&cashierId), sizeof(size_t));
-	date.deserialize(ifs);
+	dateTime.deserialize(ifs);
 	ifs.read(reinterpret_cast<char*>(&totalPrice), sizeof(double));
 	size_t itemsSize = 0;
 	ifs.read(reinterpret_cast<char*>(&itemsSize), sizeof(size_t));

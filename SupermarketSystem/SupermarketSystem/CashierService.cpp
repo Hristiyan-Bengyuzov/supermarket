@@ -9,7 +9,7 @@ void CashierService::saveToFile(Transaction& transaction) const
 	ofs << "Receipt" << std::endl;
 	ofs << "Transaction ID: " << transaction.getId() << std::endl;
 	ofs << "Cashier ID: " << transaction.getCashierId() << std::endl;
-	ofs << "Date: " << transaction.getDate() << std::endl;
+	ofs << "Date: " << transaction.getDate().toString() << std::endl;
 	ofs << "------------------------" << std::endl;
 	auto items = transaction.getItemsMutable();
 	for (size_t i = 0; i < items.getSize(); i++)

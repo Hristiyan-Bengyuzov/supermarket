@@ -2,6 +2,7 @@
 #include "TransactionItem.h"
 #include "Serializable.h"
 #include "Printable.h"
+#include "DateTime.h"
 
 static size_t transactionCounter = 0;
 class Transaction : public Serializable, public Printable {
@@ -9,16 +10,15 @@ private:
 	size_t id = 0;
 	size_t cashierId = 0;
 	Vector<TransactionItem> items;
-	String date = "";
+	DateTime dateTime;
 	double totalPrice = 0;
 
-	String getCurrentDate() const;
 public:
 	Transaction() = default;
 	Transaction(size_t cashierId);
 
 	size_t getCashierId() const;
-	const String& getDate() const;
+	const DateTime& getDate() const;
 	double getTotalPrice() const;
 	size_t getId() const;
 	void addItem(const TransactionItem& item);
