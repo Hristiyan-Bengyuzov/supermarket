@@ -19,6 +19,26 @@ Transaction::Transaction(size_t cashierId)
 	calculateTotalPrice();
 }
 
+size_t Transaction::getCashierId() const
+{
+	return cashierId;
+}
+
+const String& Transaction::getDate() const
+{
+	return date;
+}
+
+double Transaction::getTotalPrice() const
+{
+	return totalPrice;
+}
+
+size_t Transaction::getId() const
+{
+	return id;
+}
+
 void Transaction::addItem(const TransactionItem& item)
 {
 	items.push_back(item);
@@ -37,7 +57,6 @@ void Transaction::calculateTotalPrice()
 	{
 		totalPrice += items[i].total;
 	}
-	print(std::cout);
 }
 
 void Transaction::serialize(std::ofstream& ofs) const

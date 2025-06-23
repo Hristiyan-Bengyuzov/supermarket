@@ -6,6 +6,7 @@
 #include "EmployeeService.h"
 #include "ProductService.h"
 #include "ManagerService.h"
+#include "CashierService.h"
 #include "RegisterCommand.h"
 #include "LoginCommand.h"
 #include "ListUserCommand.h"
@@ -16,7 +17,6 @@
 #include "ListPendingCommand.h"
 #include "ApproveCommand.h"
 #include "DeclineCommand.h"
-#include "ListWarnedCommand.h"
 #include "WarnCashierCommand.h"
 #include "PromoteCashierCommand.h"
 #include "FireCashierCommand.h"
@@ -26,6 +26,7 @@
 #include "DeleteProductCommand.h"
 #include "LoadProductsCommand.h"
 #include "LoadGiftCardsCommand.h"
+#include "SellCommand.h"
 
 class CommandRegistry {
 private:
@@ -34,9 +35,10 @@ private:
 	EmployeeService& employeeService;
 	ProductService& productService;
 	ManagerService& managerService;
+	CashierService& cashierService;
 
 public:
-	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService);
+	CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService);
 	void executeCommand(const String& commandLine);
 	void showHelp() const;
 };

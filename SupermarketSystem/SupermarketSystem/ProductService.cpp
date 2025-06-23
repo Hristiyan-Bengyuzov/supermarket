@@ -4,6 +4,14 @@ ProductService::ProductService(ProductRepository& productRepo, CategoryRepositor
 {
 }
 
+double ProductService::getPriceById(size_t productId) const
+{
+	auto product = productRepo.findById(productId);
+	if (!product)
+		throw std::runtime_error("Product not found");
+	return product->getPrice();
+}
+
 void ProductService::listProducts(std::ostream& os) const
 {
 	if (productRepo.count() == 0)
@@ -35,4 +43,13 @@ void ProductService::listProductByCategory(std::ostream& os, size_t categoryId) 
 			products[i]->print(os);
 		}
 	}
+}
+
+void ProductService::decreaseQuantity(size_t productId, double quantityOrWeight)
+{
+	SharedPtr<Product> product = productRepo.findById(productId);
+	if (!product)
+		throw std::runtime_error("Product not found");
+	product->sell(quantityOrWeight);
+	productRepo.saveChanges();
 }

@@ -52,3 +52,11 @@ bool ProductRepository::hasProductWithCategory(size_t categoryId) const
 	}
 	return false;
 }
+
+const String& ProductRepository::getNameById(size_t id) const
+{
+	auto product = findById(id);
+	if (!product)
+		throw std::runtime_error("Product not found");
+	return product->getName();
+}

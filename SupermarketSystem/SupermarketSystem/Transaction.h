@@ -17,6 +17,10 @@ public:
 	Transaction() = default;
 	Transaction(size_t cashierId);
 
+	size_t getCashierId() const;
+	const String& getDate() const;
+	double getTotalPrice() const;
+	size_t getId() const;
 	void addItem(const TransactionItem& item);
 	Vector<TransactionItem>& getItemsMutable();
 	void calculateTotalPrice();

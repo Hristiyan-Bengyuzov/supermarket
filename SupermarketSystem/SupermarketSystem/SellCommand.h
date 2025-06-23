@@ -1,13 +1,15 @@
 #pragma once
 #include "Command.h"
-#include "ManagerService.h"
+#include "CashierService.h"
+#include "ProductService.h"
 
-class ListWarnedCommand : public Command {
+class SellCommand : public Command {
 private:
-	ManagerService& managerService;
+	CashierService& cashierService;
+	ProductService& productService;
 
 public:
-	ListWarnedCommand(ManagerService& managerService);
+	SellCommand(CashierService& cashierService, ProductService& productService);
 	void execute(const Vector<String> args, size_t employeeId) override;
 	const String getName() const override;
 	bool canExecute(Role role, bool isAuthenticated) const override;

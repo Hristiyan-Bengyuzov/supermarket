@@ -30,6 +30,11 @@ const String& Product::getName() const
 	return name;
 }
 
+double Product::getPrice() const
+{
+	return price;
+}
+
 void Product::serialize(std::ofstream& ofs) const
 {
 	ofs.write(reinterpret_cast<const char*>(&id), sizeof(size_t));

@@ -29,6 +29,7 @@ public:
 	size_t getId() const;
 	size_t getCategoryId() const;
 	const String& getName() const;
+	double getPrice() const;	
 
 	void serialize(std::ofstream& ofs) const override;
 	void deserialize(std::ifstream& ifs) override;

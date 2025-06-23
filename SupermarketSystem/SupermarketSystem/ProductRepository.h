@@ -10,4 +10,5 @@ public:
 	ProductRepository();
 
 	bool hasProductWithCategory(size_t categoryId) const;
+	const String& getNameById(size_t id) const;
 };

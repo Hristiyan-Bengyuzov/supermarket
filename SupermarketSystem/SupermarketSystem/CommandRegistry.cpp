@@ -1,6 +1,6 @@
 #include "CommandRegistry.h"
 
-CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService) : authService(authService), employeeService(employeeService), productService(productService), managerService(managerService)
+CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& employeeService, ProductService& productService, ManagerService& managerService, CashierService& cashierService) : authService(authService), employeeService(employeeService), productService(productService), managerService(managerService), cashierService(cashierService)
 {
 	commands.push_back(SharedPtr<Command>(new RegisterCommand(authService)));
 	commands.push_back(SharedPtr<Command>(new LoginCommand(authService)));
@@ -12,7 +12,6 @@ CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& empl
 	commands.push_back(SharedPtr<Command>(new ListPendingCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new ApproveCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new DeclineCommand(managerService)));
-	commands.push_back(SharedPtr<Command>(new ListWarnedCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new WarnCashierCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new PromoteCashierCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new FireCashierCommand(managerService)));
@@ -22,6 +21,7 @@ CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& empl
 	commands.push_back(SharedPtr<Command>(new DeleteProductCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new LoadProductsCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new LoadGiftCardsCommand(managerService)));
+	commands.push_back(SharedPtr<Command>(new SellCommand(cashierService, productService)));
 }
 
 void CommandRegistry::executeCommand(const String& commandLine)
@@ -41,7 +41,6 @@ void CommandRegistry::executeCommand(const String& commandLine)
 		return;
 	}
 
-	// Get current employee ID (0 if not authenticated)
 	int employeeId = 0;
 	Role currentRole = Role::None;
 	if (authService.isAuthenticated() && authService.getCurrentEmployee())

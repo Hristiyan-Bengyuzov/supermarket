@@ -1,12 +1,34 @@
 #include "CashierService.h"
 
+void CashierService::saveToFile(Transaction& transaction) const
+{
+	String fileName = "receipt_" + String::parseFrom(transaction.getId()) + ".txt";
+	std::ofstream ofs(fileName.c_str());
+	if (!ofs.is_open())
+		throw std::runtime_error("Could not open file for saving receipt");
+	ofs << "Receipt ID: " << transaction.getId() << std::endl;
+	ofs << "Cashier ID: " << transaction.getCashierId() << std::endl;
+	ofs << "Date: " << transaction.getDate() << std::endl;
+	ofs << "------------------------" << std::endl;
+	auto items = transaction.getItemsMutable();
+	for (size_t i = 0; i < items.getSize(); i++)
+	{
+		ofs << productRepo.getNameById(items[i].productId) << std::endl;
+		ofs << items[i].quantityOrWeight << " * " << items[i].price << " - " << items[i].total << std::endl;
+		ofs << "###" << std::endl;
+	}
+
+	ofs << "TOTAL: " << transaction.getTotalPrice() << std::endl;
+	ofs.close();
+}
+
 void CashierService::applyGiftCardDiscount(Transaction& transaction, const String& giftCardCode)
 {
 	SharedPtr<GiftCard> giftCard = giftCardRepo.findByCode(giftCardCode);
 	if (!giftCard)
 		throw std::runtime_error("Giftcard not found");
 
-	auto transactionItems = transaction.getItemsMutable();
+	Vector<TransactionItem>& transactionItems = transaction.getItemsMutable();
 	switch (giftCard->getType())
 	{
 	case GiftCardType::Single:
@@ -50,7 +72,7 @@ void CashierService::applyMultipleCategoryDiscount(Vector<TransactionItem>& tran
 	if (!multipleCard)
 		throw std::runtime_error("Invalid giftcard type");
 
-	auto categoryIds = multipleCard->getCategoryIds();
+	const Vector<size_t>& categoryIds = multipleCard->getCategoryIds();
 
 	for (size_t i = 0; i < transactionItems.getSize(); i++)
 	{
@@ -92,16 +114,17 @@ bool CashierService::sell(size_t cashierId, Transaction& transaction, const Stri
 
 	SharedPtr<Cashier> cashier = SharedPtr<Cashier>(cashierEmp);
 
-	if (giftCardCode!="")
+	if (giftCardCode != "")
 	{
 		applyGiftCardDiscount(transaction, giftCardCode);
 	}
 
 	transactionRepo.add(transaction);
 	cashier->completeTransaction();
+	saveToFile(transaction);
 	if (cashier->getTransactionsMade() % 3 == 0)
 	{
-		size_t lastId = (size_t)cashier->removeLastWarning();
+		int lastId = cashier->removeLastWarning();
 		if (lastId != -1)
 			warningRepo.removeById(lastId);
 	}
