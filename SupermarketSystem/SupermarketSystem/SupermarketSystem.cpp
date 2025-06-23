@@ -17,33 +17,36 @@
 
 int main()
 {
+	srand(static_cast<unsigned int>(time(0)));
 	EmployeeRepository repo;
 	ProductRepository repo2;
 	CategoryRepository repo3;
 	RegisterRequestRepository repo4;
 	WarningRepository repo5;
 	GiftCardRepository repo6;
+	TransactionRepository repo7;
 
 	AuthService authService(repo, repo4);
-	ManagerService service(repo, repo2, repo3, repo4, repo5, repo6);
+	ManagerService managerService(repo, repo2, repo3, repo4, repo5, repo6);
 	ProductService productService(repo2, repo3);
-	EmployeeService empService(repo);
+	EmployeeService empService(repo, repo7);
+	CashierService cashierService(repo, repo2, repo6, repo7, repo5);
 
-	if (repo.count() == 0)
-	{
-		repo.add(new Manager{ "Hris","Beng","0895556517",19,"password" });
-		repo.add(new Cashier{ "Hari","Slavkov","0895556517",19,"password" });
-		repo.saveChanges();
-	}
+	//if (repo.count() == 0)
+	//{
+	//	repo.add(new Manager{ "Hris","Beng","0895556517",19,"password" });
+	//	repo.add(new Cashier{ "Hari","Slavkov","0895556517",19,"password" });
+	//	repo.saveChanges();
+	//}
 
-	if (repo3.count() == 0)
-	{
-		repo3.add(new Category{ "Fruit","Fruit are really cool" });
-		repo3.add(new Category{ "Vegetables", "Vegetables are really cool" });
-		repo3.saveChanges();
-	}
+	//if (repo3.count() == 0)
+	//{
+	//	repo3.add(new Category{ "Fruit","Fruit are really cool" });
+	//	repo3.add(new Category{ "Vegetables", "Vegetables are really cool" });
+	//	repo3.saveChanges();
+	//}
 
-	CommandRegistry registry(authService, empService, productService, service);
+	CommandRegistry registry(authService, empService, productService, managerService, cashierService);
 
 	while (true)
 	{

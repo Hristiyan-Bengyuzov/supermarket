@@ -27,6 +27,7 @@
 #include "LoadProductsCommand.h"
 #include "LoadGiftCardsCommand.h"
 #include "SellCommand.h"
+#include "ListTransactionsCommand.h"
 
 class CommandRegistry {
 private:

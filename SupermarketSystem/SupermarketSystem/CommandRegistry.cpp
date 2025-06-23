@@ -22,6 +22,7 @@ CommandRegistry::CommandRegistry(AuthService& authService, EmployeeService& empl
 	commands.push_back(SharedPtr<Command>(new LoadProductsCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new LoadGiftCardsCommand(managerService)));
 	commands.push_back(SharedPtr<Command>(new SellCommand(cashierService, productService)));
+	commands.push_back(SharedPtr<Command>(new ListTransactionsCommand(employeeService)));
 }
 
 void CommandRegistry::executeCommand(const String& commandLine)

@@ -6,7 +6,8 @@ void CashierService::saveToFile(Transaction& transaction) const
 	std::ofstream ofs(fileName.c_str());
 	if (!ofs.is_open())
 		throw std::runtime_error("Could not open file for saving receipt");
-	ofs << "Receipt ID: " << transaction.getId() << std::endl;
+	ofs << "Receipt" << std::endl;
+	ofs << "Transaction ID: " << transaction.getId() << std::endl;
 	ofs << "Cashier ID: " << transaction.getCashierId() << std::endl;
 	ofs << "Date: " << transaction.getDate() << std::endl;
 	ofs << "------------------------" << std::endl;

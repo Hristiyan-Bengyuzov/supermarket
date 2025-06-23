@@ -1,6 +1,6 @@
 #include "EmployeeService.h"
 
-EmployeeService::EmployeeService(EmployeeRepository& employeeRepo) : employeeRepo(employeeRepo)
+EmployeeService::EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo) : employeeRepo(employeeRepo), transactionRepo(transactionRepo)
 {
 }
 
@@ -9,11 +9,24 @@ void EmployeeService::listWorkers(std::ostream& os) const
 	if (employeeRepo.count() == 0)
 		throw std::runtime_error("No employees in the store");
 
-	auto employees = employeeRepo.getAll();
+	const Vector<SharedPtr<Employee>>& employees = employeeRepo.getAll();
 	os << "Employees: " << employees.getSize() << std::endl;
 	for (size_t i = 0; i < employees.getSize(); i++)
 	{
 		employees[i]->print(os);
+		os << std::endl;
+	}
+}
+
+void EmployeeService::listTransactions(std::ostream& os) const
+{
+	if (transactionRepo.count() == 0)
+		throw std::runtime_error("No transactions");
+	const Vector<SharedPtr<Transaction>>& transactions = transactionRepo.getAll();
+	os << "Transactions: " << transactions.getSize() << std::endl;
+	for (size_t i = 0; i < transactions.getSize(); i++)
+	{
+		transactions[i]->print(os);
 		os << std::endl;
 	}
 }
