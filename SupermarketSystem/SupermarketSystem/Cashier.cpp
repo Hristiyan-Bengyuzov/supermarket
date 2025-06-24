@@ -65,8 +65,8 @@ void Cashier::deserialize(std::ifstream& ifs)
 
 void Cashier::print(std::ostream& os) const
 {
-	os << "Role: Cashier" << std::endl;
-	os << "Transactions made: " << transactionsMade << std::endl;
-	os << "Warnings: " << warningIds.getSize() << std::endl;
+	os << PINK << "  Role: " << RESET << "Cashier" << std::endl;
+	os << PINK << "  Transactions made: " << RESET << transactionsMade << std::endl;
+	os << PINK << "  Warnings: " << RESET << warningIds.getSize() << std::endl;
 	Employee::print(os);
 }

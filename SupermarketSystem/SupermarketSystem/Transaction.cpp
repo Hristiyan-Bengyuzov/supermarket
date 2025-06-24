@@ -82,6 +82,6 @@ void Transaction::deserialize(std::ifstream& ifs)
 
 void Transaction::print(std::ostream& os) const
 {
-	os << "Transaction ID: " << id << std::endl;
-	os << "Price: " << totalPrice << std::endl;
+	os << PINK << "  Transaction ID: " << RESET << id << std::endl;
+	os << PINK << "  Price: " << RESET << totalPrice << std::endl;
 }

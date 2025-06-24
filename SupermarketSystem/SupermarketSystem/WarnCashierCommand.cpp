@@ -7,7 +7,7 @@ WarnCashierCommand::WarnCashierCommand(ManagerService& managerService, LogServic
 
 void WarnCashierCommand::execute(const Vector<String> args, size_t employeeId)
 {
-	if (args.getSize() != 4)
+	if (args.getSize() < 4)
 	{
 		showHelp();
 		return;
@@ -15,7 +15,13 @@ void WarnCashierCommand::execute(const Vector<String> args, size_t employeeId)
 
 	size_t cashierId = args[1].toSizeT();
 	size_t points = args[2].toSizeT();
-	String description = args[3];
+
+	String description;
+	for (size_t i = 3; i < args.getSize(); i++) {
+		if (i > 3) description += " ";
+		description += args[i];
+	}
+
 	CreateWarningDTO warningDTO{ employeeId, cashierId, points, description };
 	if (managerService.warnCashier(warningDTO))
 	{

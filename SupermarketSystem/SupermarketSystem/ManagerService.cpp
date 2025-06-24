@@ -8,7 +8,7 @@ void ManagerService::listPending(std::ostream& os) const
 {
 	bool found = false;
 
-	auto requests = requestRepo.getAll();
+	const Vector<SharedPtr<RegisterRequest>>& requests = requestRepo.getAll();
 	for (size_t i = 0; i < requests.getSize(); i++)
 	{
 		if (requests[i]->getStatus() == Status::Pending)
@@ -16,7 +16,7 @@ void ManagerService::listPending(std::ostream& os) const
 			if (!found)
 			{
 				found = true;
-				os << "Requests: " << std::endl;
+				os << HEADER << "Requests: " << RESET << std::endl;
 			}
 			requests[i]->print(os);
 		}
@@ -69,7 +69,7 @@ bool ManagerService::decline(size_t managerId, size_t requestId, const String& s
 void ManagerService::listWarnedCashiers(std::ostream& os, unsigned points) const
 {
 	bool found = false;
-	auto employees = employeeRepo.getAll();
+	const Vector<SharedPtr<Employee>>& employees = employeeRepo.getAll();
 
 	for (size_t i = 0; i < employees.getSize(); i++)
 	{
@@ -81,7 +81,7 @@ void ManagerService::listWarnedCashiers(std::ostream& os, unsigned points) const
 				if (!found)
 				{
 					found = true;
-					os << "Warned cashiers: " << std::endl;
+					os << std::endl << HEADER << "Warned cashiers: " << RESET << std::endl << std::endl;
 				}
 				employees[i]->print(os);
 			}

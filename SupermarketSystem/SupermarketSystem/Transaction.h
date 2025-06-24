@@ -3,6 +3,9 @@
 #include "Serializable.h"
 #include "Printable.h"
 #include "DateTime.h"
+#include "Constants.h"
+
+using namespace Constants;
 
 static size_t transactionCounter = 0;
 class Transaction : public Serializable, public Printable {

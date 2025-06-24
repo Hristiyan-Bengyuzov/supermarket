@@ -2,6 +2,9 @@
 #include "Printable.h"
 #include "String.h"
 #include "Password.h"
+#include "Constants.h"
+
+using namespace Constants;
 
 enum class Role {
 	Cashier,

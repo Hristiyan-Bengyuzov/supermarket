@@ -3,6 +3,9 @@
 #include "String.h"
 #include "Serializable.h"
 #include "Printable.h"
+#include "Constants.h"
+
+using namespace Constants;
 
 static size_t logCounter = 0;
 class Log : public Serializable, public Printable {

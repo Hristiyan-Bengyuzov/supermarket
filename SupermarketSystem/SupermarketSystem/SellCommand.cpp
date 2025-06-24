@@ -10,6 +10,7 @@ void SellCommand::execute(const Vector<String> args, size_t employeeId)
 	transaction.print(std::cout);
 
 	while (true) {
+		std::cout << std::endl;
 		productService.listProducts(std::cout);
 
 		String input = String::readLineNotEmpty("Enter product ID to sell. Enter END to end the transaction: > ");

@@ -1,4 +1,7 @@
 #include "ProductService.h"
+#include "Constants.h"
+
+using namespace Constants;
 
 ProductService::ProductService(ProductRepository& productRepo, CategoryRepository& categoryRepo) : productRepo(productRepo), categoryRepo(categoryRepo)
 {
@@ -17,8 +20,8 @@ void ProductService::listProducts(std::ostream& os) const
 	if (productRepo.count() == 0)
 		throw std::runtime_error("No products in the store");
 
-	auto products = productRepo.getAll();
-	os << "Products: " << std::endl;
+	const Vector<SharedPtr<Product>>& products = productRepo.getAll();
+	os << std::endl << HEADER << "Products: " << RESET << std::endl;
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
 		products[i]->print(os);
@@ -34,8 +37,8 @@ void ProductService::listProductByCategory(std::ostream& os, size_t categoryId) 
 	if (!categoryRepo.findById(categoryId))
 		throw std::runtime_error("Category not found");
 
-	auto products = productRepo.getAll();
-	os << "Products: " << std::endl;
+	const Vector<SharedPtr<Product>>& products = productRepo.getAll();
+	os << std::endl << HEADER << "Products: " << RESET << std::endl;
 	for (size_t i = 0; i < products.getSize(); i++)
 	{
 		if (products[i]->getCategoryId() == categoryId)

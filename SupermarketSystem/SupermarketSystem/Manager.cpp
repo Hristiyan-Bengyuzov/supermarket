@@ -76,6 +76,6 @@ void Manager::deserialize(std::ifstream& ifs)
 
 void Manager::print(std::ostream& os) const
 {
-	os << "Role: Manager" << std::endl;
+	os << PINK << "  Role: " << RESET << "Manager" << std::endl;
 	Employee::print(os);
 }

@@ -10,7 +10,7 @@ void EmployeeService::listWorkers(std::ostream& os) const
 		throw std::runtime_error("No employees in the store");
 
 	const Vector<SharedPtr<Employee>>& employees = employeeRepo.getAll();
-	os << "Employees: " << employees.getSize() << std::endl;
+	os << std::endl << HEADER << "Employees: " << RESET << employees.getSize() << std::endl << std::endl;
 	for (size_t i = 0; i < employees.getSize(); i++)
 	{
 		employees[i]->print(os);
@@ -23,7 +23,7 @@ void EmployeeService::listTransactions(std::ostream& os) const
 	if (transactionRepo.count() == 0)
 		throw std::runtime_error("No transactions");
 	const Vector<SharedPtr<Transaction>>& transactions = transactionRepo.getAll();
-	os << "Transactions: " << transactions.getSize() << std::endl;
+	os << std::endl << HEADER << "Transactions: " << RESET << transactions.getSize() << std::endl << std::endl;
 	for (size_t i = 0; i < transactions.getSize(); i++)
 	{
 		transactions[i]->print(os);
@@ -36,7 +36,7 @@ void EmployeeService::listFeed(std::ostream& os) const
 	if (logRepo.count() == 0)
 		throw std::runtime_error("No logs in the feed");
 	const Vector<SharedPtr<Log>>& logs = logRepo.getAll();
-	os << "Feed: " << logs.getSize() << std::endl;
+	os << std::endl << HEADER << "Feed: " << RESET << logs.getSize() << std::endl << std::endl;
 	for (size_t i = 0; i < logs.getSize(); i++)
 	{
 		logs[i]->print(os);

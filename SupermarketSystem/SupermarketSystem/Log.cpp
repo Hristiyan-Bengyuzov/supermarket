@@ -24,7 +24,7 @@ void Log::deserialize(std::ifstream& ifs)
 
 void Log::print(std::ostream& os) const
 {
-	os << "Employee ID: " << employeeId << std::endl;
-	os << "Date: " << dateTime.toString() << std::endl;
-	os << "Message: " << message << std::endl;
+	os << PINK << "  Employee ID: " << RESET << employeeId << std::endl;
+	os << PINK << "  Date: " << RESET << dateTime.toString() << std::endl;
+	os << PINK << "  Message: " << RESET << message << std::endl;
 }

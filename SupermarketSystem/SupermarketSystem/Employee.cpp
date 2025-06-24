@@ -97,11 +97,11 @@ void Employee::deserialize(std::ifstream& ifs)
 
 void Employee::print(std::ostream& os) const
 {
-	os << "Id: " << id << std::endl;
-	os << "First name: " << name << std::endl;
-	os << "Last name: " << familyName << std::endl;
-	os << "Phone number: " << phoneNumber << std::endl;
-	os << "Age: " << age << std::endl;
+	os << PINK << "  Id: " << RESET << id << std::endl;
+	os << PINK << "  First name: " << RESET << name << std::endl;
+	os << PINK << "  Last name: " << RESET << familyName << std::endl;
+	os << PINK << "  Phone number: " << RESET << phoneNumber << std::endl;
+	os << PINK << "  Age: " << RESET << age << std::endl;
 }
 
 Employee::Employee() = default;
