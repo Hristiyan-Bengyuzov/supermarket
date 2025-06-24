@@ -1,6 +1,6 @@
 #include "EmployeeService.h"
 
-EmployeeService::EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo) : employeeRepo(employeeRepo), transactionRepo(transactionRepo)
+EmployeeService::EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo, LogRepository& logRepo) : employeeRepo(employeeRepo), transactionRepo(transactionRepo), logRepo(logRepo)
 {
 }
 
@@ -27,6 +27,19 @@ void EmployeeService::listTransactions(std::ostream& os) const
 	for (size_t i = 0; i < transactions.getSize(); i++)
 	{
 		transactions[i]->print(os);
+		os << std::endl;
+	}
+}
+
+void EmployeeService::listFeed(std::ostream& os) const
+{
+	if (logRepo.count() == 0)
+		throw std::runtime_error("No logs in the feed");
+	const Vector<SharedPtr<Log>>& logs = logRepo.getAll();
+	os << "Feed: " << logs.getSize() << std::endl;
+	for (size_t i = 0; i < logs.getSize(); i++)
+	{
+		logs[i]->print(os);
 		os << std::endl;
 	}
 }

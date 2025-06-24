@@ -14,6 +14,7 @@
 #include "EmployeeService.h"
 #include "GiftCardRepository.h"
 #include "CommandRegistry.h"
+#include "LogService.h"
 
 int main()
 {
@@ -25,12 +26,14 @@ int main()
 	WarningRepository repo5;
 	GiftCardRepository repo6;
 	TransactionRepository repo7;
+	LogRepository repo8;
 
 	AuthService authService(repo, repo4);
 	ManagerService managerService(repo, repo2, repo3, repo4, repo5, repo6);
 	ProductService productService(repo2, repo3);
-	EmployeeService empService(repo, repo7);
+	EmployeeService empService(repo, repo7, repo8);
 	CashierService cashierService(repo, repo2, repo6, repo7, repo5);
+	LogService logService(repo8);
 
 	//if (repo.count() == 0)
 	//{
@@ -46,7 +49,7 @@ int main()
 	//	repo3.saveChanges();
 	//}
 
-	CommandRegistry registry(authService, empService, productService, managerService, cashierService);
+	CommandRegistry registry(authService, empService, productService, managerService, cashierService, logService);
 
 	while (true)
 	{
