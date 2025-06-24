@@ -1,6 +1,6 @@
 #include "EmployeeService.h"
 
-EmployeeService::EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo, LogRepository& logRepo) : employeeRepo(employeeRepo), transactionRepo(transactionRepo), logRepo(logRepo)
+EmployeeService::EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo, LogRepository& logRepo, WarningRepository& warningRepo) : employeeRepo(employeeRepo), transactionRepo(transactionRepo), logRepo(logRepo), warningRepo(warningRepo)
 {
 }
 
@@ -51,5 +51,5 @@ bool EmployeeService::leave(size_t employeeId)
 		throw std::runtime_error("Employee not found");
 
 	employeeRepo.removeById(employeeId);
-	return employeeRepo.saveChanges();
+	return employeeRepo.saveChanges() && warningRepo.removeByCashierId(employeeId);
 }

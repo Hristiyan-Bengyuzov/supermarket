@@ -2,15 +2,17 @@
 #include "EmployeeRepository.h"
 #include "TransactionRepository.h"
 #include "LogRepository.h"
+#include "WarningRepository.h"
 
 class EmployeeService {
 private:
 	EmployeeRepository& employeeRepo;
 	TransactionRepository& transactionRepo;
 	LogRepository& logRepo;
+	WarningRepository& warningRepo;
 
 public:
-	EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo, LogRepository& logRepo);
+	EmployeeService(EmployeeRepository& employeeRepo, TransactionRepository& transactionRepo, LogRepository& logRepo, WarningRepository& warningRepo);
 
 	void listWorkers(std::ostream& os) const;
 	void listTransactions(std::ostream& os) const;

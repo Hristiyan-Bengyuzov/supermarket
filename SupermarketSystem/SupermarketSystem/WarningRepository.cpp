@@ -25,3 +25,15 @@ unsigned WarningRepository::getPoints(size_t cashierId) const
 	}
 	return res;
 }
+
+bool WarningRepository::removeByCashierId(size_t cashierId)
+{
+	for (size_t i = 0; i < items.getSize(); i++)
+	{
+		if (items[i]->getCashierId() == cashierId)
+		{
+			items.remove(i);
+		}
+	}
+	return saveChanges();
+}

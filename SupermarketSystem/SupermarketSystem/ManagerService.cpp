@@ -102,7 +102,7 @@ bool ManagerService::warnCashier(const CreateWarningDTO& dto)
 	if (!cashierEmp || cashierEmp->getRole() != Role::Cashier)
 		throw std::runtime_error("Invalid cashier");
 
-	SharedPtr<Cashier> cashier = SharedPtr<Cashier>(dynamic_cast<Cashier*>(cashierEmp.get()));
+	SharedPtr<Cashier> cashier = SharedPtr<Cashier>(cashierEmp);
 
 	Warning newWarning(dto.managerId, dto.cashierId, dto.description, dto.points);
 	warningRepo.add(newWarning);
@@ -127,7 +127,7 @@ bool ManagerService::promoteCashier(size_t managerId, size_t cashierId, const St
 	employeeRepo.removeById(cashierId);
 	Manager* newManager = new Manager(cashierId, cashier->getName(), cashier->getFamilyName(), cashier->getPhoneNumber(), cashier->getAge(), cashier->getPass());
 	employeeRepo.add(newManager);
-	return employeeRepo.saveChanges();
+	return employeeRepo.saveChanges() && warningRepo.removeByCashierId(cashierId);
 }
 
 // bruh this is pretty much the same as promoting :sob:
@@ -145,7 +145,7 @@ bool ManagerService::fireCashier(size_t managerId, size_t cashierId, const Strin
 	if (!cashier || cashier->getRole() != Role::Cashier)
 		throw std::runtime_error("Invalid cashier");
 
-	return employeeRepo.removeById(cashierId) && employeeRepo.saveChanges();
+	return employeeRepo.removeById(cashierId) && employeeRepo.saveChanges() && warningRepo.removeByCashierId(cashierId);
 }
 
 bool ManagerService::addCategory(const CreateCategoryDTO& dto)
@@ -283,24 +283,24 @@ bool ManagerService::loadGiftCards(const String& file)
 
 			switch (type)
 			{
-				case GiftCardType::Single: {
-					giftCard = new SingleCategoryGiftCard(tokens[2].toSizeT(), categoryRepo.getCategoryIdByName(tokens[1]));
-					break;
+			case GiftCardType::Single: {
+				giftCard = new SingleCategoryGiftCard(tokens[2].toSizeT(), categoryRepo.getCategoryIdByName(tokens[1]));
+				break;
+			}
+			case GiftCardType::Multiple: {
+				size_t count = tokens[1].toSizeT();
+				Vector<size_t> categoryIds;
+				for (size_t i = 0; i < count; i++)
+				{
+					categoryIds.push_back(categoryRepo.getCategoryIdByName(tokens[2 + i]));
 				}
-				case GiftCardType::Multiple: {
-					size_t count = tokens[1].toSizeT();
-					Vector<size_t> categoryIds;
-					for (size_t i = 0; i < count; i++)
-					{
-						categoryIds.push_back(categoryRepo.getCategoryIdByName(tokens[2 + i]));
-					}
-					giftCard = new MultipleCategoryGiftCard(tokens[tokens.getSize() - 1].toSizeT(), categoryIds);
-					break;
-				}
-				case GiftCardType::All: {
-					giftCard = new AllProductsGiftCard(tokens[1].toSizeT());
-					break;
-				}
+				giftCard = new MultipleCategoryGiftCard(tokens[tokens.getSize() - 1].toSizeT(), categoryIds);
+				break;
+			}
+			case GiftCardType::All: {
+				giftCard = new AllProductsGiftCard(tokens[1].toSizeT());
+				break;
+			}
 			}
 
 			giftCardRepo.add(giftCard);

@@ -6,14 +6,20 @@ AddCategoryCommand::AddCategoryCommand(ManagerService& managerService, LogServic
 
 void AddCategoryCommand::execute(const Vector<String> args, size_t employeeId)
 {
-	if (args.getSize() != 3)
+	if (args.getSize() < 3)
 	{
 		showHelp();
 		return;
 	}
 
 	String categoryName = args[1];
-	String categoryDescription = args[2];
+	String categoryDescription;
+	for (size_t i = 2; i < args.getSize(); i++)
+	{
+		if (i > 2) categoryDescription += " ";
+		categoryDescription += args[i];
+	}
+
 	CreateCategoryDTO categoryDTO{ categoryName, categoryDescription };
 	if (managerService.addCategory(categoryDTO))
 	{

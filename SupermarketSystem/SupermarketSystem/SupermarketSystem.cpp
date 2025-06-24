@@ -31,7 +31,7 @@ int main()
 	AuthService authService(repo, repo4);
 	ManagerService managerService(repo, repo2, repo3, repo4, repo5, repo6);
 	ProductService productService(repo2, repo3);
-	EmployeeService empService(repo, repo7, repo8);
+	EmployeeService empService(repo, repo7, repo8, repo5);
 	CashierService cashierService(repo, repo2, repo6, repo7, repo5);
 	LogService logService(repo8);
 
